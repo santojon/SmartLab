@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517013103) do
+ActiveRecord::Schema.define(version: 20170517022151) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "desk_id"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20170517013103) do
     t.string   "serial"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "desk_id"
+    t.index ["desk_id"], name: "index_equipment_on_desk_id"
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -61,6 +63,8 @@ ActiveRecord::Schema.define(version: 20170517013103) do
     t.string   "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
