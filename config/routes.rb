@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  #homepage
-  get 'welcome/index'
-  root 'welcome#index'
+  #login
+  get 'login/index'
+  root 'login#index'
+  
+  #homepage (after login)
+  get 'home', to: 'home#index'
 
   #application routes
   resources :tokens
