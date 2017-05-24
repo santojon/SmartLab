@@ -1,24 +1,55 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Cpf:</strong>
-  <%= @user.cpf %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Admin:</strong>
-  <%= @user.admin %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<h1><%= @user.name%></h1>
+<%= form_for(@user, class: 'form-horizontal') do |f| %>
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :name %></span>
+        <%= f.text_field :name, class: 'form-control', disabled: true, placeholder: 'Name' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :cpf %></span>
+        <%= f.text_field :cpf, class: 'form-control', disabled: true, placeholder: 'Cpf' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :admin %></span>
+        <span class="input-group-addon"><%= f.check_box :admin, disabled: true %></span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
+        ), edit_user_path(@user), class: 'btn btn-primary' %>
+        
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+        ), users_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+  </div>
+<% end %>

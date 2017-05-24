@@ -2,6 +2,34 @@
   margin-right: 10px;
 }
 
+.mtop10 {
+  margin-top: 10px !important;
+}
+
+td {
+  a {
+    i {
+      &.fa {
+        &.fa-trash {
+          color: #c9302c;
+        }
+        
+        &.fa-pencil {
+          color: #ec971f;
+        }
+      }
+    }
+  }
+}
+
+span {
+  &.fa {
+    &.fa-exclamation-triangle {
+      color: #ec971f;
+    }
+  }
+}
+
 body {
   background-color: #fff;
   color: #333;
