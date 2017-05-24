@@ -11,12 +11,12 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <% if params[:controller] != 'login' %>
-      <%= render partial: 'layouts/navbar' %>
-    <% end %>
-    
     <div class="container">
+      <!-- Navbar -->
+      <% if params[:controller] != 'login' %>
+        <%= render partial: 'layouts/navbar' %>
+      <% end %>
+    
       <!-- Body -->
       <%= yield %>
     </div>
