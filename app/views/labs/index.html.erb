@@ -1,31 +1,76 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<h1>Labs</h1>
+<div>
+  <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-plus') + ' New'
+    ), new_lab_path, title: 'Create new', class: 'btn btn-md btn-primary pull-left mright10' %>
+  <h1>Labs</h1>
+</div>
 
-<table>
-  <thead>
+<% if !@labs.empty? %>
+  <table class="table table-striped">
+    <thead>
     <tr>
       <th>Building</th>
       <th>Code</th>
       <th>Name</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
-
-  <tbody>
-    <% @labs.each do |lab| %>
-      <tr>
-        <td><%= lab.building %></td>
-        <td><%= lab.code %></td>
-        <td><%= lab.name %></td>
-        <td><%= link_to 'Show', lab %></td>
-        <td><%= link_to 'Edit', edit_lab_path(lab) %></td>
-        <td><%= link_to 'Destroy', lab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Lab', new_lab_path %>
+  
+    <tbody>
+      <% @labs.each do |lab| %>
+        <tr>
+          <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_lab_path(lab), title: 'Edit Lab'  %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1">
+            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<% lab.id %>"><i class="fa fa-trash"></i></a>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="delete-user-modal-<% lab.id %>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= lab.name %>&nbsp;</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p><h4>Are you sure? This cannot be undone.</h4></p>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to content_tag(
+                        :div,
+                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                    ), lab, method: :delete, class: 'btn btn-danger' %>
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-dismissible alert-info">
+    Nothing created yet.
+  </div>
+<% end %>

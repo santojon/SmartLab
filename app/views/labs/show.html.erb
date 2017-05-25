@@ -1,19 +1,55 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<p>
-  <strong>Building:</strong>
-  <%= @lab.building %>
-</p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @lab.code %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @lab.name %>
-</p>
-
-<%= link_to 'Edit', edit_lab_path(@lab) %> |
-<%= link_to 'Back', labs_path %>
+<h1><%= @lab.name%></h1>
+<%= form_for(@lab, class: 'form-horizontal') do |f| %>
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :building %></span>
+        <%= f.text_field :building, class: 'form-control', disabled: true, placeholder: 'Building' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :code %></span>
+        <%= f.text_field :code, class: 'form-control', disabled: true, placeholder: 'Code' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :name %></span>
+        <%= f.text_field :name, class: 'form-control', disabled: true, placeholder: 'Name' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
+        ), edit_lab_path(@lab), class: 'btn btn-primary' %>
+        
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+        ), labs_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+  </div>
+<% end %>
