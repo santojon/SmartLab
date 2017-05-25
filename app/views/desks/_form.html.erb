@@ -1,27 +1,55 @@
-<%= form_for(desk) do |f| %>
+<%= form_for(desk, class: 'form-horizontal') do |f| %>
   <% if desk.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-dismissible alert-danger">
       <h2><%= pluralize(desk.errors.count, "error") %> prohibited this desk from being saved:</h2>
-
+      
       <ul>
-      <% desk.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% desk.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
+    
+    <script type="text/javascript">
+      setTimeout(() => {
+        $('#error_explanation').hide()
+      }, 5000)
+    </script>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :name %></span>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Name' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :status %></span>
+        <%= f.text_field :status, class: 'form-control', placeholder: 'Status' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.number_field :status %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <!-- Submit button to show -->
+        <buttom type="submit" class='btn btn-primary' onclick="$('#submit').click()">
+          <i class="fa fa-check"></i> Submit
+        </buttom>
+        
+        <!-- hidden real one -->
+        <input id="submit" type="submit" hidden="hidden">
+        
+        <!-- Cancel -->
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-close') + ' Cancel'
+        ), desks_path, class: 'btn btn-default' %>
+      </div>
+    </div>
   </div>
 <% end %>

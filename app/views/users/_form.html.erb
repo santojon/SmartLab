@@ -1,14 +1,20 @@
 <%= form_for(user, class: 'form-horizontal') do |f| %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-dismissible alert-danger">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+      
       <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
+    
+    <script type="text/javascript">
+      setTimeout(() => {
+        $('#error_explanation').hide()
+      }, 5000)
+    </script>
   <% end %>
   
   <div class="row mtop10">

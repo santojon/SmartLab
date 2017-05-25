@@ -1,31 +1,76 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<h1>Incidents</h1>
+<div>
+  <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-plus') + ' New'
+    ), new_incident_path, title: 'Create new', class: 'btn btn-md btn-primary pull-left mright10' %>
+  <h1>Incidents</h1>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Location</th>
-      <th>Description</th>
-      <th>Measure</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @incidents.each do |incident| %>
+<% if !@incidents.empty? %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= incident.location %></td>
-        <td><%= incident.description %></td>
-        <td><%= incident.measure %></td>
-        <td><%= link_to 'Show', incident %></td>
-        <td><%= link_to 'Edit', edit_incident_path(incident) %></td>
-        <td><%= link_to 'Destroy', incident, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Measure</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Incident', new_incident_path %>
+    </thead>
+  
+    <tbody>
+      <% @incidents.each do |incident| %>
+        <tr>
+          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to incident.location, incident, title: 'Show Incident' %></td>
+          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to incident.description, incident, title: 'Show Incident' %></td>
+          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to incident.measure, incident, title: 'Show Incident' %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_incident_path(incident), title: 'Edit Incident'  %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1">
+            <a href="#" title='Delete Incident' data-toggle="modal" data-target="#delete-user-modal-<% incident.id %>"><i class="fa fa-trash"></i></a>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="delete-user-modal-<% incident.id %>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete Incident&nbsp;</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p><h4>Are you sure? This cannot be undone.</h4></p>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to content_tag(
+                        :div,
+                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                    ), incident, method: :delete, class: 'btn btn-danger' %>
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-dismissible alert-info">
+    Nothing created yet.
+  </div>
+<% end %>

@@ -22,9 +22,9 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Building</th>
       <th>Code</th>
       <th>Name</th>
+      <th>Building</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -33,12 +33,12 @@
     <tbody>
       <% @labs.each do |lab| %>
         <tr>
-          <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
-          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
-          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
+          <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_lab_path(lab), title: 'Edit Lab'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<% lab.id %>"><i class="fa fa-trash"></i></a>
+            <a href="#" title='Delete Lab' data-toggle="modal" data-target="#delete-user-modal-<% lab.id %>"><i class="fa fa-trash"></i></a>
             
             <!-- Modal -->
             <div class="modal fade" id="delete-user-modal-<% lab.id %>" role="dialog">

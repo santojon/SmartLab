@@ -1,24 +1,62 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<p>
-  <strong>Model:</strong>
-  <%= @equipment.model %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @equipment.description %>
-</p>
-
-<p>
-  <strong>Tag:</strong>
-  <%= @equipment.tag %>
-</p>
-
-<p>
-  <strong>Serial:</strong>
-  <%= @equipment.serial %>
-</p>
-
-<%= link_to 'Edit', edit_equipment_path(@equipment) %> |
-<%= link_to 'Back', equipment_index_path %>
+<h1><%= @equipment.serial%></h1>
+<%= form_for(@equipment, class: 'form-horizontal') do |f| %>
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :model %></span>
+        <%= f.text_field :model, class: 'form-control', disabled: true, placeholder: 'Model' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :description %></span>
+        <%= f.text_field :description, class: 'form-control', disabled: true, placeholder: 'Description' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :tag %></span>
+        <%= f.text_field :tag, class: 'form-control', disabled: true, placeholder: 'Tag' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :serial %></span>
+        <%= f.text_field :serial, class: 'form-control', disabled: true, placeholder: 'Serial' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
+        ), edit_equipment_path(@equipment), class: 'btn btn-primary' %>
+        
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+        ), equipment_index_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+  </div>
+<% end %>

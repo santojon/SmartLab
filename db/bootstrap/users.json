@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Admin",
+        "cpf": 11111111111,
+        "password": "admin",
+        "admin": true
+    },
+    {
+        "name": "User",
+        "cpf": 22222222222,
+        "password": "user",
+        "admin": false
+    }
+]

@@ -1,14 +1,20 @@
 <%= form_for(lab, class: 'form-horizontal') do |f| %>
   <% if lab.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-dismissible alert-danger">
       <h2><%= pluralize(lab.errors.count, "error") %> prohibited this lab from being saved:</h2>
-
+      
       <ul>
-      <% lab.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% lab.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
+    
+    <script type="text/javascript">
+      setTimeout(() => {
+        $('#error_explanation').hide()
+      }, 5000)
+    </script>
   <% end %>
   
   <div class="row mtop10">
