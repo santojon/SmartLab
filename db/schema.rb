@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170517022151) do
   end
 
   create_table "desks", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "status"
+    t.string   "name",       null: false
+    t.integer  "status",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "lab_id"
@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(version: 20170517022151) do
   end
 
   create_table "equipment", force: :cascade do |t|
-    t.string   "model"
+    t.string   "model",       null: false
     t.string   "description"
-    t.string   "tag"
-    t.string   "serial"
+    t.string   "tag",         null: false
+    t.string   "serial",      null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "desk_id"
@@ -44,17 +44,17 @@ ActiveRecord::Schema.define(version: 20170517022151) do
   end
 
   create_table "incidents", force: :cascade do |t|
-    t.string   "location"
-    t.string   "description"
+    t.string   "location",    null: false
+    t.string   "description", null: false
     t.string   "measure"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "labs", force: :cascade do |t|
-    t.string   "building"
-    t.string   "code"
-    t.string   "name"
+    t.string   "building",   null: false
+    t.string   "code",       null: false
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -68,12 +68,12 @@ ActiveRecord::Schema.define(version: 20170517022151) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "cpf"
-    t.string   "password"
-    t.boolean  "admin"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                       null: false
+    t.string   "cpf",                        null: false
+    t.string   "password",                   null: false
+    t.boolean  "admin",      default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
 end

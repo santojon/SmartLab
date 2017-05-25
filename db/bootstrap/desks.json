@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Desk 01",
+        "status": 0,
+        "lab": 1
+    },
+    {
+        "name": "Desk 02",
+        "status": 0,
+        "lab": 1
+    },
+    {
+        "name": "Desk 03",
+        "status": 1,
+        "lab": 1
+    },
+    {
+        "name": "Desk 04",
+        "status": 0,
+        "lab": 1
+    },
+    {
+        "name": "Desk 05",
+        "status": 1,
+        "lab": 1
+    }
+]

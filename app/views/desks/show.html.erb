@@ -1,14 +1,46 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @desk.name %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @desk.status %>
-</p>
-
-<%= link_to 'Edit', edit_desk_path(@desk) %> |
-<%= link_to 'Back', desks_path %>
+<h1><%= @desk.name%></h1>
+<%= form_for(@desk, class: 'form-horizontal') do |f| %>
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :name %></span>
+        <%= f.text_field :name, class: 'form-control', disabled: true, placeholder: 'Name' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :status %></span>
+        <%= f.text_field :status, class: 'form-control', disabled: true, placeholder: 'Status' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
+        ), edit_desk_path(@desk), class: 'btn btn-primary' %>
+        
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+        ), desks_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,37 +1,71 @@
-<%= form_for(equipment) do |f| %>
+<%= form_for(equipment, class: 'form-horizontal') do |f| %>
   <% if equipment.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-dismissible alert-danger">
       <h2><%= pluralize(equipment.errors.count, "error") %> prohibited this equipment from being saved:</h2>
-
+      
       <ul>
-      <% equipment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% equipment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
+    
+    <script type="text/javascript">
+      setTimeout(() => {
+        $('#error_explanation').hide()
+      }, 5000)
+    </script>
   <% end %>
-
-  <div class="field">
-    <%= f.label :model %>
-    <%= f.text_field :model %>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :model %></span>
+        <%= f.text_field :model, class: 'form-control', placeholder: 'Model' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :description %></span>
+        <%= f.text_field :description, class: 'form-control', placeholder: 'Description' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :tag %></span>
+        <%= f.text_field :tag, class: 'form-control', placeholder: 'Tag' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :serial %></span>
+        <%= f.text_field :serial, class: 'form-control', placeholder: 'Serial' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :tag %>
-    <%= f.text_field :tag %>
-  </div>
-
-  <div class="field">
-    <%= f.label :serial %>
-    <%= f.text_field :serial %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <!-- Submit button to show -->
+        <buttom type="submit" class='btn btn-primary' onclick="$('#submit').click()">
+          <i class="fa fa-check"></i> Submit
+        </buttom>
+        
+        <!-- hidden real one -->
+        <input id="submit" type="submit" hidden="hidden">
+        
+        <!-- Cancel -->
+        <%= link_to content_tag(
+            :div,
+            content_tag(:i,  nil , class: 'fa fa-close') + ' Cancel'
+        ), equipment_index_path, class: 'btn btn-default' %>
+      </div>
+    </div>
   </div>
 <% end %>
