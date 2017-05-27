@@ -24,7 +24,10 @@ class DesksController < ApplicationController
   # POST /desks
   # POST /desks.json
   def create
-    @desk = Desk.new(desk_params)
+    d = desk_params.to_h
+    d[:lab] = Lab.find(d[:lab])
+    
+    @desk = Desk.new(d)
 
     respond_to do |format|
       if @desk.save
@@ -40,8 +43,11 @@ class DesksController < ApplicationController
   # PATCH/PUT /desks/1
   # PATCH/PUT /desks/1.json
   def update
+    d = desk_params.to_h
+    d[:lab] = Lab.find(d[:lab])
+    
     respond_to do |format|
-      if @desk.update(desk_params)
+      if @desk.update(d)
         format.html { redirect_to @desk, notice: 'Desk was successfully updated.' }
         format.json { render :show, status: :ok, location: @desk }
       else
@@ -69,6 +75,6 @@ class DesksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def desk_params
-      params.require(:desk).permit(:name, :status)
+      params.require(:desk).permit(:name, :status, :lab)
     end
 end

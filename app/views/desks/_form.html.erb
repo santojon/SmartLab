@@ -36,6 +36,15 @@
   <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
+        <span class="input-group-addon"><%= f.label :lab %></span>
+        <%= f.select :lab, Lab.all.collect { |l| [ l.name, l.id ] }, { :include_blank => 'Select a Lab' }, { :class => 'form-control' } %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
         <!-- Submit button to show -->
         <buttom type="submit" class='btn btn-primary' onclick="$('#submit').click()">
           <i class="fa fa-check"></i> Submit
