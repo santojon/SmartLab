@@ -38,10 +38,10 @@
           <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to incident.measure, incident, title: 'Show Incident' %></td>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_incident_path(incident), title: 'Edit Incident'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete Incident' data-toggle="modal" data-target="#delete-user-modal-<% incident.id %>"><i class="fa fa-trash"></i></a>
+            <a href="#" title='Delete Incident' data-toggle="modal" data-target="#delete-user-modal-<%= incident.id %>"><i class="fa fa-trash"></i></a>
             
             <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<% incident.id %>" role="dialog">
+            <div class="modal fade" id="delete-user-modal-<%= incident.id %>" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->

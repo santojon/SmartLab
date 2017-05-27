@@ -33,13 +33,13 @@
       <% @desks.each do |desk| %>
         <tr>
           <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.name, desk, title: 'Show Desk' %></td>
-          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.status, desk, title: 'Show Status' %></td>
+          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.status, desk, title: 'Show Desk' %></td>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_desk_path(desk), title: 'Edit Desk'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<% desk.id %>"><i class="fa fa-trash"></i></a>
+            <a href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<%= desk.id %>"><i class="fa fa-trash"></i></a>
             
             <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<% desk.id %>" role="dialog">
+            <div class="modal fade" id="delete-user-modal-<%= desk.id %>" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->
