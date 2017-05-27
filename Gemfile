@@ -27,8 +27,11 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
-#font awesome
+# Font Awesome
 gem 'font-awesome-sass'
+
+# Select2
+gem 'select2-rails'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
