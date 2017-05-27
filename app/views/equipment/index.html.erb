@@ -40,10 +40,10 @@
           <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_equipment_path(equipment), title: 'Edit Equipment'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete Equipment' data-toggle="modal" data-target="#delete-user-modal-<% equipment.id %>"><i class="fa fa-trash"></i></a>
+            <a href="#" title='Delete Equipment' data-toggle="modal" data-target="#delete-user-modal-<%= equipment.id %>"><i class="fa fa-trash"></i></a>
             
             <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<% equipment.id %>" role="dialog">
+            <div class="modal fade" id="delete-user-modal-<%= equipment.id %>" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->

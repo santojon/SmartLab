@@ -38,10 +38,10 @@
           <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<% user.id %>"><i class="fa fa-trash"></i></a>
+            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<%= user.id %>"><i class="fa fa-trash"></i></a>
             
             <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<% user.id %>" role="dialog">
+            <div class="modal fade" id="delete-user-modal-<%= user.id %>" role="dialog">
               <div class="modal-dialog">
               
                 <!-- Modal content-->
