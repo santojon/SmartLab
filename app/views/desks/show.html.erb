@@ -38,6 +38,40 @@
   </div>
   
   <div class="row mtop10">
+    <div class="col-md-12">
+      <h3>Equipment</h3>
+      <% @equipment = Equipment.where(desk: Desk.find(@desk.id)).find_each(batch_size: 25) %>
+      <% if !@equipment.none? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Description</th>
+              <th>Tag</th>
+              <th>Serial</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @equipment.each do |equipment| %>
+              <tr>
+                <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.model, equipment, title: 'Show Equipment' %></td>
+                <td class="col-sm-5 col-md-5 col-lg-5"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
+                <td class="col-sm-2 col-md-6 col-lg-2"><%= link_to equipment.tag, equipment, title: 'Show Equipment' %></td>
+                <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="alert alert-dismissible alert-info">
+          This Desk have no Equipment yet.
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
         <%= link_to content_tag(
