@@ -4,4 +4,8 @@ class Desk < ApplicationRecord
 
 	has_many :accesses
 	has_many :users, through: :accesses
+	
+	def to_s
+	    name
+	end
 end

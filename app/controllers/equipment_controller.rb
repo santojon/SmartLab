@@ -24,7 +24,11 @@ class EquipmentController < ApplicationController
   # POST /equipment
   # POST /equipment.json
   def create
-    @equipment = Equipment.new(equipment_params)
+    
+    e = equipment_params.to_h
+    e[:desk] = Desk.find(e[:desk])
+    
+    @equipment = Equipment.new(e)
 
     respond_to do |format|
       if @equipment.save
@@ -40,8 +44,11 @@ class EquipmentController < ApplicationController
   # PATCH/PUT /equipment/1
   # PATCH/PUT /equipment/1.json
   def update
+    e = equipment_params.to_h
+    e[:desk] = Desk.find(e[:desk])
+    
     respond_to do |format|
-      if @equipment.update(equipment_params)
+      if @equipment.update(e)
         format.html { redirect_to @equipment, notice: 'Equipment was successfully updated.' }
         format.json { render :show, status: :ok, location: @equipment }
       else
@@ -69,6 +76,6 @@ class EquipmentController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipment_params
-      params.require(:equipment).permit(:model, :description, :tag, :serial)
+      params.require(:equipment).permit(:model, :description, :tag, :serial, :desk)
     end
 end
