@@ -74,15 +74,33 @@
   <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
-        <%= link_to content_tag(
-            :div,
-            content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
-        ), edit_desk_path(@desk), class: 'btn btn-primary' %>
+        <% if current_user.admin %>
+          <%= link_to content_tag(
+              :div,
+              content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
+          ), edit_desk_path(@desk), class: 'btn btn-primary' %>
+          
+          <% if @desk.status == 0 %>
+            <%= link_to content_tag(
+                :div,
+                content_tag(:i,  nil , class: 'fa fa-sign-in') + ' Access'
+            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
+          <% end %>
+        <% else %>
+          <% if @desk.status == 0 %>
+            <%= link_to content_tag(
+                :div,
+                content_tag(:i,  nil , class: 'fa fa-sign-in') + ' Access'
+            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
         
-        <%= link_to content_tag(
-            :div,
-            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-        ), desks_path, class: 'btn btn-default' %>
+        <% if current_user.admin %>
+          <%= link_to content_tag(
+              :div,
+              content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+          ), desks_path, class: 'btn btn-default' %>
+        <% end %>
       </div>
     </div>
   </div>

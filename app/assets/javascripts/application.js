@@ -15,8 +15,3 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
-
-
-$('.select2').select2({
-    theme: 'bootstrap'
-})

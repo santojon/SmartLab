@@ -43,7 +43,7 @@
             <%= yield %>
           <% else %>
             <!-- User can see only user related routes -->
-            <% if ((params[:controller] == 'users') && (params.has_key?(:id))) %>
+            <% if (((params[:controller] == 'users') || (params[:controller] == 'desks')) && (params.has_key?(:id))) %>
               <%= yield %>
             <% else %>
               <!-- Or will get a 403 -->

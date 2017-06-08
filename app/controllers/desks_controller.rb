@@ -1,5 +1,5 @@
 class DesksController < ApplicationController
-  before_action :set_desk, only: [:show, :edit, :update, :destroy]
+  before_action :set_desk, only: [:show, :edit, :update, :destroy, :access]
 
   # GET /desks
   # GET /desks.json
@@ -10,6 +10,16 @@ class DesksController < ApplicationController
   # GET /desks/1
   # GET /desks/1.json
   def show
+  end
+  
+  # GET /desks/1/access
+  # GET /desks/1/access.json
+  def access
+    #define access, create something, blah blah blah...
+    #change status of desk etc...
+    
+    #then
+    redirect_to @desk, notice: 'Desk is now in use by you.'
   end
 
   # GET /desks/new

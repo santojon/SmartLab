@@ -1,58 +1,46 @@
-<h1>Home</h1>
-
-<% if @users %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Cpf</th>
-        <th>Admin</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
+<% if !Lab.all.empty? %>
+  <ul class="nav nav-tabs">
+    <% Lab.all.each.with_index do |l, index| %>
+      <li role="presentation" <% if index == 0 %> class="active" <% end %>><a data-toggle="tab" href="#lab_<%= l.id %>"><%= l.name %></a></li>
+    <% end %>
+  </ul>
   
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to user.name, user, title: 'Show User' %></td>
-          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to user.cpf, user, title: 'Show User' %></td>
-          <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<% user.id %>"><i class="fa fa-trash"></i></a>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<% user.id %>" role="dialog">
-              <div class="modal-dialog">
-              
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= user.name %>&nbsp;</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p><h4>Are you sure? This cannot be undone.</h4></p>
-                  </div>
-                  <div class="modal-footer">
-                    <%= link_to content_tag(
-                        :div,
-                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
-                    ), user, method: :delete, class: 'btn btn-danger' %>
-                    
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-                  </div>
+  <div class="tab-content">
+    <% Lab.all.each.with_index do |l, index| %>
+      <div class="tab-pane <% if index == 0 %> active <% end %>" id="lab_<%= l.id %>">
+        <div class="row mtop30">
+          <% l.desks.all.each.with_index do |d, index| %>
+            <div class="col-sm-4 col-md-3">
+              <div class="thumbnail <% if d.status == 0 %> alert-success <% else if d.status == 1 %> alert-danger <% end end %>">
+                <div class="caption centered">
+                  <h3><%= d.name %></h3>
+                  <p>
+                    <!-- Free -->
+                    <% if d.status == 0 %>
+                      <%= link_to content_tag(
+                          :span,
+                          content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
+                      ), d, class: 'btn btn-default' %>
+                    <% else %>
+                      <!-- In use -->
+                      <% if d.status == 1 %>
+                        <button class="btn btn-default" disabled><span class="fa fa-key"></span> In Use</button>
+                      <% else %>
+                        <!-- Blocked -->
+                        <button class="btn btn-default" disabled><span class="fa fa-key"></span> Blocked</button>
+                      <% end %>
+                    <% end %>
+                  </p>
                 </div>
-                
               </div>
             </div>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% else %>
   <div class="alert alert-dismissible alert-info">
-    Nothing occurs today.
+    Nothing to show.
   </div>
 <% end %>
