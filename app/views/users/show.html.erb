@@ -57,10 +57,12 @@
             content_tag(:i,  nil , class: 'fa fa-desktop') + ' Accesses'
         ), {:controller => 'users', :action => 'accesses', :id => @user.id}, class: 'btn btn-success' %>
         
-        <%= link_to content_tag(
-            :div,
-            content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-        ), users_path, class: 'btn btn-default' %>
+        <% if current_user.admin %>
+          <%= link_to content_tag(
+              :div,
+              content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+          ), users_path, class: 'btn btn-default' %>
+        <% end %>
       </div>
     </div>
   </div>

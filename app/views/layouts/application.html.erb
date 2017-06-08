@@ -13,10 +13,11 @@
   <body>
     <div class="container">
       <!-- Navbar -->
-      <% if ((params[:controller] != 'devise/sessions') && (params[:action] != 'new')) %>
+      <% if (params[:controller] != 'devise/sessions') %>
         <%= render partial: 'layouts/navbar' %>
       <% end %>
       
+      <!-- Errors -->
       <% if alert %>
         <div id="alert" class="alert alert-dismissible alert-danger">
           <%= alert %>
@@ -30,7 +31,30 @@
       <% end %>
     
       <!-- Body -->
-      <%= yield %>
+      
+      <!-- Home for all -->
+      <% if (params[:controller] == 'home') %>
+        <%= yield %>
+      <% else %>
+        <!-- Signed in ? -->
+        <% if user_signed_in? %>
+          <% if current_user.admin %>
+            <!-- Admin can see everything -->
+            <%= yield %>
+          <% else %>
+            <!-- User can see only user related routes -->
+            <% if ((params[:controller] == 'users') && (params.has_key?(:id))) %>
+              <%= yield %>
+            <% else %>
+              <!-- Or will get a 403 -->
+              <%= render partial: 'home/forbidden' %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <!-- Not signed in (Login page) -->
+          <%= yield %>
+        <% end %>
+      <% end %>
     </div>
   </body>
 </html>
