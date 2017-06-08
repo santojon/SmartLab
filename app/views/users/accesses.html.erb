@@ -1,0 +1,17 @@
+<% if notice %>
+  <div id="notice" class="alert alert-dismissible alert-success">
+    <%= notice %>
+  </div>
+  
+  <script type="text/javascript">
+    setTimeout(() => {
+      $('#notice').hide()
+    }, 3000)
+  </script>
+<% end %>
+
+<h1>Accesses for <%= @user.name%></h1>
+<%= link_to content_tag(
+    :div,
+    content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
+), users_path, class: 'btn btn-default' %>

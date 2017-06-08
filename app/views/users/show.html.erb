@@ -51,10 +51,12 @@
             :div,
             content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
         ), edit_user_path(@user), class: 'btn btn-primary' %>
+        
         <%= link_to content_tag(
             :div,
             content_tag(:i,  nil , class: 'fa fa-desktop') + ' Accesses'
-        ), edit_user_path(@user), class: 'btn btn-success' %>
+        ), {:controller => 'users', :action => 'accesses', :id => @user.id}, class: 'btn btn-success' %>
+        
         <%= link_to content_tag(
             :div,
             content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
