@@ -49,14 +49,16 @@
     </div>
   </div>
   
-  <div class="row mtop10">
-    <div class="col-md-6">
-      <div class="input-group">
-        <span class="input-group-addon"><%= f.label :admin %></span>
-        <span class="input-group-addon"><%= f.check_box :admin %></span>
+  <% if current_user.admin %>
+    <div class="row mtop10">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon"><%= f.label :admin %></span>
+          <span class="input-group-addon"><%= f.check_box :admin %></span>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
   
   <div class="row mtop10">
     <div class="col-md-6">

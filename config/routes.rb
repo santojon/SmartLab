@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     #home for not logged in (login page)
     root 'devise/sessions#new'
     
-    #wildcard
+    #not found
     get "*route" => "home#not_found"
   end
 end
