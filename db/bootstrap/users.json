@@ -2,13 +2,15 @@
     {
         "name": "Admin",
         "cpf": 11111111111,
-        "password": "admin",
+        "email": "admin@admin.com",
+        "password": "adminpass",
         "admin": true
     },
     {
         "name": "User",
         "cpf": 22222222222,
-        "password": "user",
+        "email": "user@user.com",
+        "password": "userpass",
         "admin": false
     }
 ]

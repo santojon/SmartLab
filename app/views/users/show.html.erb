@@ -31,6 +31,13 @@
   <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
+        <span class="input-group-addon"><%= f.label :email %></span>
+        <%= f.email_field :email, class: 'form-control', disabled: true, placeholder: 'Email' %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
         <span class="input-group-addon"><%= f.label :admin %></span>
         <span class="input-group-addon"><%= f.check_box :admin, disabled: true %></span>
       </div>
