@@ -4,7 +4,7 @@ class DesksController < ApplicationController
   # GET /desks
   # GET /desks.json
   def index
-    @desks = Desk.all
+    @desks = Desk.paginate(:page => params[:page], :per_page => 25)
   end
 
   # GET /desks/1

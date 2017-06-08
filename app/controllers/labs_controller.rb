@@ -4,7 +4,7 @@ class LabsController < ApplicationController
   # GET /labs
   # GET /labs.json
   def index
-    @labs = Lab.all
+    @labs = Lab.paginate(:page => params[:page], :per_page => 25)
   end
 
   # GET /labs/1

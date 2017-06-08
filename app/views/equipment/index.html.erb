@@ -70,6 +70,8 @@
         </tr>
       <% end %>
     </tbody>
+    
+    <%= will_paginate @equipment, renderer: BootstrapPagination::Rails %>
   </table>
 <% else %>
   <div class="alert alert-dismissible alert-info">
