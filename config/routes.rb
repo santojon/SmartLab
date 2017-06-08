@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-    #login
+  #login
   devise_for :users
   devise_scope :user do
     #logout page
@@ -23,5 +23,8 @@ Rails.application.routes.draw do
     
     #home for not logged in (login page)
     root 'devise/sessions#new'
+    
+    #wildcard
+    get "*route" => "home#not_found"
   end
 end
