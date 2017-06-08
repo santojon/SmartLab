@@ -27,8 +27,8 @@
     
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon"><%= f.label :cpf %></span>
-        <%= f.text_field :cpf, class: 'form-control', placeholder: 'Cpf' %>
+        <span class="input-group-addon"><%= f.label :email %></span>
+        <%= f.email_field :email, class: 'form-control', placeholder: 'Email' %>
       </div>
     </div>
   </div>
@@ -41,6 +41,15 @@
       </div>
     </div>
   
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :cpf %></span>
+        <%= f.text_field :cpf, class: 'form-control', placeholder: 'Cpf' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-addon"><%= f.label :admin %></span>

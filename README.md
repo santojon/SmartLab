@@ -5,4 +5,5 @@
 - bundle install
 - rails db:drop
 - rails db:setup
+- rails db:migrate
 - rails server

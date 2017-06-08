@@ -13,8 +13,20 @@
   <body>
     <div class="container">
       <!-- Navbar -->
-      <% if params[:controller] != 'login' %>
+      <% if ((params[:controller] != 'devise/sessions') && (params[:action] != 'new')) %>
         <%= render partial: 'layouts/navbar' %>
+      <% end %>
+      
+      <% if alert %>
+        <div id="alert" class="alert alert-dismissible alert-danger">
+          <%= alert %>
+        </div>
+        
+        <script type="text/javascript">
+          setTimeout(() => {
+            $('#alert').hide()
+          }, 3000)
+        </script>
       <% end %>
     
       <!-- Body -->

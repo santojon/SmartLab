@@ -1,0 +1,16 @@
+<div class="login-container">
+  <div class="form-login">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-login') do |f| %>
+      <h1 class="form-login-heading">SmartLab</h1>
+      <h2 class="form-login-heading">Please log in</h2>
+      
+      <label class="sr-only" for="inputEmail">Email address</label>
+      <%= f.email_field :email, autofocus: true, class: 'form-control', id: 'inputEmail', placeholder: 'Email' %>
+      
+      <label class="sr-only" for="inputPassword">Password</label>
+      <%= f.password_field :password, autofocus: true, class: 'form-control', id: 'inputPassword', placeholder: 'Password' %>
+      
+      <%= f.submit 'Log in', class: 'btn btn-lg btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
