@@ -11,7 +11,7 @@
         <div class="row mtop30">
           <% l.desks.all.each.with_index do |d, index| %>
             <div class="col-sm-4 col-md-3">
-              <div class="thumbnail <% if d.status == 0 %> alert-success <% else if d.status == 1 %> alert-danger <% end end %>">
+              <div class="thumbnail <% if d.status == 0 %> alert-success <% else if d.status == 1 %><% if Access.find_by(desk_id: d.id, user_id: current_user.id) %> alert-info <% else %> alert-danger <% end end end %>">
                 <div class="caption centered">
                   <h3><%= d.name %></h3>
                   <p>
@@ -28,7 +28,7 @@
                         <% if Access.find_by(desk_id: d.id, user_id: current_user.id) %>
                           <%= link_to content_tag(
                               :span,
-                              content_tag(:i,  nil , class: 'fa fa-desktop') + ' Show'
+                              content_tag(:i,  nil , class: 'fa fa-user') + ' With You'
                           ), d, class: 'btn btn-default' %>
                         <% else %>
                           <button class="btn btn-default" disabled><span class="fa fa-desktop"></span> In Use</button>

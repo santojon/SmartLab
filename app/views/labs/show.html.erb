@@ -40,7 +40,7 @@
   <div class="row mtop10">
     <div class="col-md-12">
       <h3>Desks</h3>
-      <% @desks = Desk.where(lab: Lab.find(@lab.id)).find_each(batch_size: 25) %>
+      <% @desks = Desk.where(lab: Lab.find(@lab.id)).paginate(:page => params[:page], :per_page => 25) %>
       <% if !@desks.none? %>
         <table class="table table-striped">
           <thead>
@@ -64,6 +64,8 @@
           This Lab have no Desks yet.
         </div>
       <% end %>
+      
+      <%= will_paginate @desks, renderer: BootstrapPagination::Rails %>
     </div>
   </div>
 

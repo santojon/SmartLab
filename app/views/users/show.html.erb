@@ -36,12 +36,14 @@
       </div>
     </div>
     
-    <div class="col-md-6">
-      <div class="input-group">
-        <span class="input-group-addon"><%= f.label :admin %></span>
-        <span class="input-group-addon"><%= f.check_box :admin, disabled: true %></span>
+    <% if current_user.admin %>
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon"><%= f.label :admin %></span>
+          <span class="input-group-addon"><%= f.check_box :admin, disabled: true %></span>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
   
   <div class="row mtop10">
@@ -52,16 +54,11 @@
             content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
         ), edit_user_path(@user), class: 'btn btn-primary' %>
         
-        <%= link_to content_tag(
-            :div,
-            content_tag(:i,  nil , class: 'fa fa-desktop') + ' Accesses'
-        ), {:controller => 'users', :action => 'accesses', :id => @user.id}, class: 'btn btn-success' %>
-        
         <% if current_user.admin %>
           <%= link_to content_tag(
               :div,
               content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-          ), users_path, class: 'btn btn-default' %>
+          ), request.referer || users_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     </div>
