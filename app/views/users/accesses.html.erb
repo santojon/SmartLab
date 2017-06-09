@@ -38,4 +38,4 @@
 <%= link_to content_tag(
     :div,
     content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-), users_path, class: 'btn btn-default' %>
+), request.referer, class: 'btn btn-default' %>
