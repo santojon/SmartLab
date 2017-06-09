@@ -17,7 +17,12 @@ class DesksController < ApplicationController
   def access
     #define access, create something, blah blah blah...
     #change status of desk etc...
-    
+    puts "isso aqui é um comentário amigavel de teste"
+    puts current_user.desks.count
+    current_user.desks << @desk
+    @desk.status = 1
+    current_user.save
+    @desk.save
     #then
     redirect_to @desk, notice: 'Desk is now in use by you.'
   end
@@ -85,6 +90,6 @@ class DesksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def desk_params
-      params.require(:desk).permit(:name, :status, :lab)
+      params.require(:desk).permit(:name, :status, :lab, :user_ids => [])
     end
 end
