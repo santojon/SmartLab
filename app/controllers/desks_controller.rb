@@ -1,5 +1,5 @@
 class DesksController < ApplicationController
-  before_action :set_desk, only: [:show, :edit, :update, :destroy, :access]
+  before_action :set_desk, only: [:show, :edit, :update, :destroy, :access, :release]
 
   # GET /desks
   # GET /desks.json
@@ -15,16 +15,30 @@ class DesksController < ApplicationController
   # GET /desks/1/access
   # GET /desks/1/access.json
   def access
-    #define access, create something, blah blah blah...
-    #change status of desk etc...
-    puts "isso aqui é um comentário amigavel de teste"
-    puts current_user.desks.count
+    #add this desk to user desks
     current_user.desks << @desk
-    @desk.status = 1
     current_user.save
+    
+    #change desk status to occupied
+    @desk.status = 1
     @desk.save
+    
     #then
     redirect_to @desk, notice: 'Desk is now in use by you.'
+  end
+  
+  # GET /desks/1/release
+  # GET /desks/1/release.json
+  def release
+    #remove desk from user
+    current_user.desks.delete(@desk)
+    current_user.save
+    
+    #change desk status to free
+    @desk.status = 0
+    @desk.save
+    #then
+    redirect_to @desk, notice: 'Desk is now released.'
   end
 
   # GET /desks/new

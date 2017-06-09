@@ -54,12 +54,21 @@
         
           <tbody>
             <% @equipment.each do |equipment| %>
-              <tr>
-                <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.model, equipment, title: 'Show Equipment' %></td>
-                <td class="col-sm-5 col-md-5 col-lg-5"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
-                <td class="col-sm-2 col-md-6 col-lg-2"><%= link_to equipment.tag, equipment, title: 'Show Equipment' %></td>
-                <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
-              </tr>
+              <% if current_user.admin %>
+                <tr>
+                  <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.model, equipment, title: 'Show Equipment' %></td>
+                  <td class="col-sm-5 col-md-5 col-lg-5"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
+                  <td class="col-sm-2 col-md-6 col-lg-2"><%= link_to equipment.tag, equipment, title: 'Show Equipment' %></td>
+                  <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td class="col-sm-3 col-md-3 col-lg-3"><%= equipment.model %></td>
+                  <td class="col-sm-5 col-md-5 col-lg-5"><%= equipment.description %></td>
+                  <td class="col-sm-2 col-md-6 col-lg-2"><%= equipment.tag %></td>
+                  <td class="col-sm-2 col-md-4 col-lg-2"><%= equipment.serial %></td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>
@@ -92,6 +101,17 @@
                 :div,
                 content_tag(:i,  nil , class: 'fa fa-sign-in') + ' Access'
             ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
+        
+        <!-- Occupied -->
+        <% if @desk.status == 1 %>
+          <!-- BY YOU! -->
+          <% if Access.find_by(desk_id: @desk.id, user_id: current_user.id) %>
+            <%= link_to content_tag(
+                :span,
+                content_tag(:i,  nil , class: 'fa fa-sign-out') + ' Release'
+            ), {:controller => 'desks', :action => 'release', :id => @desk.id}, class: 'btn btn-warning' %>
           <% end %>
         <% end %>
         
