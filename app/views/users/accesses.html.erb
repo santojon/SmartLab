@@ -11,6 +11,30 @@
 <% end %>
 
 <h1>Accesses for <%= @user.name%></h1>
+
+<% if !@user.desks.empty? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @user.desks.each do |desk| %>
+        <tr>
+          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.name, desk, title: 'Show Desk' %></td>
+          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.status, desk, title: 'Show Desk' %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_desk_path(desk), title: 'Edit Desk'  %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+
 <%= link_to content_tag(
     :div,
     content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
