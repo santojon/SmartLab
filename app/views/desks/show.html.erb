@@ -40,7 +40,7 @@
   <div class="row mtop10">
     <div class="col-md-12">
       <h3>Equipment</h3>
-      <% @equipment = Equipment.where(desk: Desk.find(@desk.id)).find_each(batch_size: 25) %>
+      <% @equipment = Equipment.where(desk: Desk.find(@desk.id)).paginate(:page => params[:page], :per_page => 25) %>
       <% if !@equipment.none? %>
         <table class="table table-striped">
           <thead>
@@ -77,6 +77,8 @@
           This Desk have no Equipment yet.
         </div>
       <% end %>
+      
+      <%= will_paginate @equipment, renderer: BootstrapPagination::Rails %>
     </div>
   </div>
   
@@ -99,7 +101,7 @@
           <% if @desk.status == 0 %>
             <%= link_to content_tag(
                 :div,
-                content_tag(:i,  nil , class: 'fa fa-sign-in') + ' Access'
+                content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
             ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
           <% end %>
         <% end %>
@@ -110,7 +112,7 @@
           <% if Access.find_by(desk_id: @desk.id, user_id: current_user.id) %>
             <%= link_to content_tag(
                 :span,
-                content_tag(:i,  nil , class: 'fa fa-sign-out') + ' Release'
+                content_tag(:i,  nil , class: 'fa fa-key') + ' Release'
             ), {:controller => 'desks', :action => 'release', :id => @desk.id}, class: 'btn btn-warning' %>
           <% end %>
         <% end %>
@@ -119,7 +121,7 @@
           <%= link_to content_tag(
               :div,
               content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-          ), desks_path, class: 'btn btn-default' %>
+          ), request.referer || desks_path, class: 'btn btn-default' %>
         <% end %>
       </div>
     </div>
