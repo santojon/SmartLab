@@ -33,7 +33,15 @@
       <% @desks.each do |desk| %>
         <tr>
           <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.name, desk, title: 'Show Desk' %></td>
-          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.status, desk, title: 'Show Desk' %></td>
+          <% if desk.status == 0 %>
+            <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Free', desk, title: 'Show Desk' %></td>
+          <% end %>
+          <% if desk.status == 1 %>
+            <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'In Use', desk, title: 'Show Desk' %></td>
+          <% end %>
+          <% if desk.status == 2 %>
+            <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Blocked', desk, title: 'Show Desk' %></td>
+          <% end %>
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_desk_path(desk), title: 'Edit Desk'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
             <a href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<%= desk.id %>"><i class="fa fa-trash"></i></a>
