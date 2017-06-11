@@ -56,6 +56,18 @@ class DesksController < ApplicationController
     d = desk_params.to_h
     d[:lab] = Lab.find(d[:lab])
     
+    if puts d[:status] == 'Free'
+      d[:status] = 0
+    end
+    
+    if puts d[:status] == 'In Use'
+      d[:status] = 1
+    end
+    
+    if puts d[:status] == 'Blocked'
+      d[:status] = 2
+    end
+    
     @desk = Desk.new(d)
 
     respond_to do |format|

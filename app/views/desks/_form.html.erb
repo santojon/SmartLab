@@ -25,10 +25,11 @@
       </div>
     </div>
     
+  <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon"><%= f.label :status %></span>
-        <%= f.text_field :status, class: 'form-control', placeholder: 'Status' %>
+        <span class="input-group-addon"><%= f.label :Status %></span>
+        <%= f.select :status, ['Free','In Use','Blocked'], { :include_blank => 'Select a status' }, { :class => 'form-control' } %>
       </div>
     </div>
   </div>

@@ -23,7 +23,16 @@
     <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-addon"><%= f.label :status %></span>
-        <%= f.text_field :status, class: 'form-control', disabled: true, placeholder: 'Status' %>
+          <% if @desk.status == 0 %>
+             <%= f.text_field :status, class: 'form-control', disabled: true, placeholder: 'Status' ,value:"Free"%>
+          <% end %>
+          <% if @desk.status == 1 %>
+            <%= f.text_field :status, class: 'form-control', disabled: true, placeholder: 'Status' ,value:"In Use"%>
+          <% end %>
+          <% if @desk.status == 2 %>
+            <%= f.text_field :status, class: 'form-control', disabled: true, placeholder: 'Status' ,value:"Blocked"%>
+          <% end %>
+        
       </div>
     </div>
   </div>
