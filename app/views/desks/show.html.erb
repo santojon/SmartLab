@@ -103,7 +103,7 @@
           <% if @desk.status == 0 %>
             <%= link_to content_tag(
                 :div,
-                content_tag(:i,  nil , class: 'fa fa-sign-in') + ' Access'
+                content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
             ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
           <% end %>
         <% else %>

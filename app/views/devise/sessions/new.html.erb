@@ -1,8 +1,9 @@
 <div class="login-container">
   <div class="form-login">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-login') do |f| %>
-      <h1 class="form-login-heading">SmartLab</h1>
-      <h2 class="form-login-heading">Please log in</h2>
+      <h1 class="centered"><span class="fa fa-lightbulb-o fa-2x"></span></h1>
+      <h1 class="form-login-heading centered">SmartLab</h1>
+      <h4 class="form-login-heading centered">Enter your credentials to log in:</h4>
       
       <label class="sr-only" for="inputEmail">Email address</label>
       <%= f.email_field :email, autofocus: true, class: 'form-control', id: 'inputEmail', placeholder: 'Email' %>
@@ -10,7 +11,9 @@
       <label class="sr-only" for="inputPassword">Password</label>
       <%= f.password_field :password, autofocus: true, class: 'form-control', id: 'inputPassword', placeholder: 'Password' %>
       
-      <%= f.submit 'Log in', class: 'btn btn-lg btn-primary btn-block' %>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">
+        <span class="fa fa-sign-in"></span> Log in
+      </button>
     <% end %>
   </div>
 </div>
