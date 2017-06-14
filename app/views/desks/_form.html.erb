@@ -37,7 +37,7 @@
     <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-addon"><%= f.label :lab %></span>
-        <%= f.select :lab, Lab.all.collect { |l| [ l.name, l.id ] }, { :include_blank => 'Select a Lab' }, { :class => 'form-control' } %>
+        <%= f.select :lab, Lab.all.collect { |l| [ l.name, l.id ] }, { :include_blank => 'Select a Lab', :selected => [desk.lab_id, desk.lab.name] }, { :class => 'form-control' } %>
       </div>
     </div>
   </div>
