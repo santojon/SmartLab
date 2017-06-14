@@ -4,6 +4,6 @@
 - gem install bundler
 - bundle install
 - rails db:drop
-- rails db:setup
 - rails db:migrate
+- rails db:setup
 - rails server

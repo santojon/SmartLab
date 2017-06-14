@@ -53,9 +53,27 @@
     <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-addon"><%= f.label :desk %></span>
-        <%= f.select :desk, Desk.all.collect { |d| [ d.name, d.id ] }, { :include_blank => 'Select a Desk' }, { :class => 'form-control' } %>
+        <%= f.select :desk, Desk.all.collect { |d| [ d.name, d.id ] }, { :include_blank => 'Select a Desk', :selected => [equipment.desk_id] }, { :class => 'form-control' } %>
       </div>
     </div>
+    
+    <% if params[:action] == 'edit' %>
+      <% if equipment.user %>
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon"><%= f.label :user %></span>
+            <%= f.select :user, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [equipment.user.id] }, { :class => 'form-control' } %>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon"><%= f.label :user %></span>
+            <%= f.select :user, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User' }, { :class => 'form-control' } %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
   
   <div class="row mtop10">

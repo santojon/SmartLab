@@ -49,24 +49,39 @@ class DesksController < ApplicationController
   # GET /desks/1/edit
   def edit
   end
+  
+  def setup_params(p)
+    d = p.to_h
+    
+    if d.has_key?(:lab)
+      if !d[:lab].blank?
+        d[:lab] = Lab.find(d[:lab])
+      else
+        d[:lab] = nil
+      end
+    end
+
+    if d.has_key?(:users)
+      if !d[:users].blank?
+        u = User.find(d[:users])
+        u.desks << @desk
+        u.save
+        
+        d[:status] = 1
+        d[:users] = [u]
+      else
+        d[:status] = 0
+        d[:users] = nil
+      end
+    end
+   
+    d
+  end
 
   # POST /desks
   # POST /desks.json
   def create
-    d = desk_params.to_h
-    d[:lab] = Lab.find(d[:lab])
-    
-    if puts d[:status] == 'Free'
-      d[:status] = 0
-    end
-    
-    if puts d[:status] == 'In Use'
-      d[:status] = 1
-    end
-    
-    if puts d[:status] == 'Blocked'
-      d[:status] = 2
-    end
+    d = setup_params(desk_params)
     
     @desk = Desk.new(d)
 
@@ -84,12 +99,29 @@ class DesksController < ApplicationController
   # PATCH/PUT /desks/1
   # PATCH/PUT /desks/1.json
   def update
-    d = desk_params.to_h
-    d[:lab] = Lab.find(d[:lab])
+    status = desk_params[:status]
+    d = setup_params(desk_params)
+    
+    if d[:users] == nil
+      #remove desk from user
+      u = @desk.users[0]
+      if u != nil
+        u.desks.delete(@desk)
+        u.save
+      end
+      
+      d[:status] = status
+      d = d.except!(:users)
+    end
     
     respond_to do |format|
       if @desk.update(d)
-        format.html { redirect_to @desk, notice: 'Desk was successfully updated.' }
+        if @desk.users.empty?
+          format.html { redirect_to @desk, notice: 'Desk was successfully updated.' }
+        else
+          format.html { redirect_to @desk, notice: 'Desk is now in use.' }
+        end
+        
         format.json { render :show, status: :ok, location: @desk }
       else
         format.html { render :edit }
@@ -116,6 +148,6 @@ class DesksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def desk_params
-      params.require(:desk).permit(:name, :status, :lab, :user_ids => [])
+      params.require(:desk).permit(:name, :status, :lab, :users)
     end
 end

@@ -59,22 +59,23 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tokens", force: :cascade do |t|
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_tokens_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name",                               null: false
     t.string   "cpf",                                null: false
     t.string   "email",                              null: false
     t.string   "encrypted_password",                 null: false
     t.boolean  "admin",              default: false, null: false
+    t.integer  "equipment_id"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.index ["equipment_id"], name: "index_users_on_equipment_id"
+  end
+
+  create_table "uses", force: :cascade do |t|
+    t.integer  "equipment_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["equipment_id"], name: "index_uses_on_equipment_id"
   end
 
 end

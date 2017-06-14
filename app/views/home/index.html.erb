@@ -31,11 +31,27 @@
                               content_tag(:i,  nil , class: 'fa fa-user') + ' With You'
                           ), d, class: 'btn btn-default' %>
                         <% else %>
-                          <button class="btn btn-default" disabled><span class="fa fa-desktop"></span> In Use</button>
+                          <!-- Admin -->
+                          <% if current_user.admin %>
+                            <%= link_to content_tag(
+                                :span,
+                                content_tag(:i,  nil , class: 'fa fa-desktop') + ' In Use'
+                            ), d, class: 'btn btn-default' %>
+                          <% else %>
+                            <button class="btn btn-default" disabled><span class="fa fa-desktop"></span> In Use</button>
+                          <% end %>
                         <% end %>
+                      <!-- Blocked -->
                       <% else %>
-                        <!-- Blocked -->
-                        <button class="btn btn-default" disabled><span class="fa fa-ban"></span> Bocked</button>
+                        <!-- Admin -->
+                        <% if current_user.admin %>
+                          <%= link_to content_tag(
+                              :span,
+                              content_tag(:i,  nil , class: 'fa fa-ban') + ' Bocked'
+                          ), d, class: 'btn btn-default' %>
+                        <% else %>
+                          <button class="btn btn-default" disabled><span class="fa fa-ban"></span> Bocked</button>
+                        <% end %>
                       <% end %>
                     <% end %>
                   </p>
