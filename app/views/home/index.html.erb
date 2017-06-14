@@ -1,52 +1,79 @@
 <% if !Lab.all.empty? %>
-  <ul class="nav nav-tabs">
-    <% Lab.all.each.with_index do |l, index| %>
-      <li role="presentation" <% if index == 0 %> class="active" <% end %>><a data-toggle="tab" href="#lab_<%= l.id %>"><%= l.name %></a></li>
-    <% end %>
-  </ul>
-  
-  <div class="tab-content">
-    <% Lab.all.each.with_index do |l, index| %>
-      <div class="tab-pane <% if index == 0 %> active <% end %>" id="lab_<%= l.id %>">
-        <div class="row mtop30">
-          <% l.desks.all.each.with_index do |d, index| %>
-            <div class="col-sm-4 col-md-3">
-              <div class="thumbnail <% if d.status == 0 %> alert-success <% else if d.status == 1 %><% if Access.find_by(desk_id: d.id, user_id: current_user.id) %> alert-info <% else %> alert-danger <% end end end %>">
-                <div class="caption centered">
-                  <h3><%= d.name %></h3>
-                  <p>
-                    <!-- Free -->
-                    <% if d.status == 0 %>
-                      <%= link_to content_tag(
-                          :span,
-                          content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
-                      ), d, class: 'btn btn-default' %>
-                    <% else %>
-                      <!-- In use -->
-                      <% if d.status == 1 %>
-                        <!-- In use BY YOU! -->
-                        <% if Access.find_by(desk_id: d.id, user_id: current_user.id) %>
-                          <%= link_to content_tag(
-                              :span,
-                              content_tag(:i,  nil , class: 'fa fa-user') + ' With You'
-                          ), d, class: 'btn btn-default' %>
-                        <% else %>
-                          <button class="btn btn-default" disabled><span class="fa fa-desktop"></span> In Use</button>
-                        <% end %>
+  <% if current_user.admin %>
+    <ul class="nav nav-tabs">
+      <% Lab.all.each.with_index do |l, index| %>
+        <li role="presentation" <% if index == 0 %> class="active" <% end %>><a data-toggle="tab" href="#lab_<%= l.id %>"><%= l.name %></a></li>
+      <% end %>
+    </ul>
+    
+    <div class="tab-content">
+      <% Lab.all.each.with_index do |l, index| %>
+        <div class="tab-pane <% if index == 0 %> active <% end %>" id="lab_<%= l.id %>">
+          <div class="row mtop30">
+            <% l.desks.all.each.with_index do |d, index| %>
+              <div class="col-sm-4 col-md-3">
+                <div class="thumbnail <% if d.status == 0 %> alert-success <% else if d.status == 1 %><% if Access.find_by(desk_id: d.id, user_id: current_user.id) %> alert-info <% else %> alert-danger <% end end end %>">
+                  <div class="caption centered">
+                    <h3><%= d.name %></h3>
+                    <p>
+                      <!-- Free -->
+                      <% if d.status == 0 %>
+                        <%= link_to content_tag(
+                            :span,
+                            content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
+                        ), d, class: 'btn btn-default' %>
                       <% else %>
+                        <!-- In use -->
+                        <% if d.status == 1 %>
+                          <!-- In use BY YOU! -->
+                          <% if Access.find_by(desk_id: d.id, user_id: current_user.id) %>
+                            <%= link_to content_tag(
+                                :span,
+                                content_tag(:i,  nil , class: 'fa fa-user') + ' With You'
+                            ), d, class: 'btn btn-default' %>
+                          <% else %>
+                            <!-- Admin -->
+                            <% if current_user.admin %>
+                              <%= link_to content_tag(
+                                  :span,
+                                  content_tag(:i,  nil , class: 'fa fa-desktop') + ' In Use'
+                              ), d, class: 'btn btn-default' %>
+                            <% else %>
+                              <button class="btn btn-default" disabled><span class="fa fa-desktop"></span> In Use</button>
+                            <% end %>
+                          <% end %>
                         <!-- Blocked -->
-                        <button class="btn btn-default" disabled><span class="fa fa-ban"></span> Bocked</button>
+                        <% else %>
+                          <!-- Admin -->
+                          <% if current_user.admin %>
+                            <%= link_to content_tag(
+                                :span,
+                                content_tag(:i,  nil , class: 'fa fa-ban') + ' Bocked'
+                            ), d, class: 'btn btn-default' %>
+                          <% else %>
+                            <button class="btn btn-default" disabled><span class="fa fa-ban"></span> Bocked</button>
+                          <% end %>
+                        <% end %>
                       <% end %>
-                    <% end %>
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-dismissible alert-info">
+      Nothing to show.
+    </div>
+    
+    <!-- Force logout -->
+    <script type="text/javascript">
+      $('#log-out-btn').click()
+    </script>
+  <% end %>
 <% else %>
   <div class="alert alert-dismissible alert-info">
     Nothing to show.
