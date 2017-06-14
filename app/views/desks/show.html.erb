@@ -44,6 +44,15 @@
         <%= f.text_field :lab, { :class => 'form-control', :disabled => true } %>
       </div>
     </div>
+    
+    <% if Access.find_by(desk_id: @desk.id) %>
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon"><%= f.label 'User' %></span>
+          <%= f.select :users, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [@desk.users[0].id] }, { :class => 'form-control', :disabled => true } %>
+        </div>
+      </div>
+    <% end %>
   </div>
   
   <div class="row mtop10">
