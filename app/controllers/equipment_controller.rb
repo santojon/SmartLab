@@ -20,13 +20,25 @@ class EquipmentController < ApplicationController
   # GET /equipment/1/edit
   def edit
   end
+  
+  def setup_params(p)
+    e = p.to_h
+    
+    if e[:desk]
+      e[:desk] = Desk.find(e[:desk])
+    end
+
+    if e[:user]
+      e[:user] = User.find(e[:user])
+    end
+   
+    e
+  end
 
   # POST /equipment
   # POST /equipment.json
   def create
-    
-    e = equipment_params.to_h
-    e[:desk] = Desk.find(e[:desk])
+    e = setup_params(equipment_params)
     
     @equipment = Equipment.new(e)
 
@@ -44,8 +56,7 @@ class EquipmentController < ApplicationController
   # PATCH/PUT /equipment/1
   # PATCH/PUT /equipment/1.json
   def update
-    e = equipment_params.to_h
-    e[:desk] = Desk.find(e[:desk])
+    e = setup_params(equipment_params)
     
     respond_to do |format|
       if @equipment.update(e)
@@ -76,6 +87,6 @@ class EquipmentController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipment_params
-      params.require(:equipment).permit(:model, :description, :tag, :serial, :desk)
+      params.require(:equipment).permit(:model, :description, :tag, :serial, :desk, :user)
     end
 end
