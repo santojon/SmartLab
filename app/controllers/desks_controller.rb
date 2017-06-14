@@ -110,7 +110,12 @@ class DesksController < ApplicationController
         u.save
       end
       
-      d[:status] = status
+      if status == '1'
+        d[:status] = 0
+      else
+        d[:status] = status
+      end
+        
       d = d.except!(:users)
     end
     
