@@ -56,7 +56,7 @@
       <div class="col-md-6">
         <div class="input-group">
           <span class="input-group-addon"><%= f.label :user %></span>
-          <%= f.select :user, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [@equipment.user.id] }, { :class => 'form-control', :disabled => true } %>
+          <%= f.select :user, User.all.collect { |u| [ u.name + ' (' + u.email + ')', u.id ] }, { :include_blank => 'Select a User', :selected => [@equipment.user.id] }, { :class => 'form-control', :disabled => true } %>
         </div>
       </div>
     <% end %>
