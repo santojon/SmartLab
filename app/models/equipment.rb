@@ -1,6 +1,4 @@
 class Equipment < ApplicationRecord
-	belongs_to :desk
-	
+	belongs_to :desk, optional: false
 	has_one :user
-	has_one :use, through: :user
 end

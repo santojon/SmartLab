@@ -71,11 +71,4 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.index ["equipment_id"], name: "index_users_on_equipment_id"
   end
 
-  create_table "uses", force: :cascade do |t|
-    t.integer  "equipment_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["equipment_id"], name: "index_uses_on_equipment_id"
-  end
-
 end
