@@ -49,7 +49,7 @@
       <div class="col-md-6">
         <div class="input-group">
           <span class="input-group-addon"><%= f.label 'User' %></span>
-          <%= f.select :users, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [@desk.users[0].id] }, { :class => 'form-control', :disabled => true } %>
+          <%= f.select :users, User.all.collect { |u| [ u.name + ' (' + u.email + ')', u.id ] }, { :include_blank => 'Select a User', :selected => [@desk.users[0].id] }, { :class => 'form-control', :disabled => true } %>
         </div>
       </div>
     <% end %>
