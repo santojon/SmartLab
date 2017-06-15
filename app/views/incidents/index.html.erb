@@ -44,7 +44,7 @@
             <td class="col-sm-6 col-md-6 col-lg-4"><%= link_to 'Pending', incident, title: 'Show Incident' %></td>
           <% end %>
           <% if incident.status == 1 %>
-            <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Resolved', desk, title: 'Show Desk' %></td>
+            <td class="col-sm-6 col-md-6 col-lg-4"><%= link_to 'Resolved', incident, title: 'Show Incident' %></td>
           <% end %>
           
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_incident_path(incident), title: 'Edit Incident'  %></td>
