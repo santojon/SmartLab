@@ -36,23 +36,25 @@
   <div class="row mtop10">
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon"><%= f.label :measure %></span>
-        <%= f.text_field :measure, class: 'form-control', placeholder: 'Measure' %>
+        <span class="input-group-addon"><%= f.label :user %></span>
+        <%= f.select :user, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [incident.user] }, { :class => 'form-control' } %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+          <span class="input-group-addon"><%= f.label :status %></span>
+          <%= f.select :status, [['Pending', 0], ['Resolved', 1]], { :include_blank => 'Select a status' }, { :class => 'form-control' } %>
       </div>
     </div>
   </div>
   
-  <div class="col-md-6">
-    <div class="input-group">
-      <span class="input-group-addon"><%= f.label :user %></span>
-      <%= f.select :user, User.all.collect { |u| [ u.name, u.id ] }, { :include_blank => 'Select a User', :selected => [incident.user] }, { :class => 'form-control' } %>
-    </div>
-  </div>
-  
-  <div class="col-md-6">
-    <div class="input-group">
-        <span class="input-group-addon"><%= f.label :status %></span>
-        <%= f.select :status, [['Pending', 0], ['Resolved', 1]], { :include_blank => 'Select a status' }, { :class => 'form-control' } %>
+  <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :measure %></span>
+        <%= f.text_field :measure, class: 'form-control', placeholder: 'Measure' %>
+      </div>
     </div>
   </div>
   
