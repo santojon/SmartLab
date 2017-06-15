@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.string   "location",    null: false
     t.string   "description", null: false
     t.string   "measure"
+    t.integer  "status",      null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

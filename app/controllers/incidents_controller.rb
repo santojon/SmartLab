@@ -20,11 +20,28 @@ class IncidentsController < ApplicationController
   # GET /incidents/1/edit
   def edit
   end
+  
+  def setup_params(p)
+    d = p.to_h
+    
+    if d.has_key?(:user)
+      if !d[:user].blank?
+        d[:user] = USer.find(d[:user])
+      else
+        d[:user] = nil
+      end
+    end
+    
+    d
+  end
 
   # POST /incidents
   # POST /incidents.json
   def create
-    @incident = Incident.new(incident_params)
+    
+    i = setup_params(incident_params)
+    
+    @incident = Incident.new(i)
 
     respond_to do |format|
       if @incident.save
@@ -69,6 +86,6 @@ class IncidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:location, :description, :measure)
+      params.require(:incident).permit(:location, :description, :measure, :user)
     end
 end
