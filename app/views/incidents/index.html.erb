@@ -25,6 +25,8 @@
         <th>Location</th>
         <th>Description</th>
         <th>Measure</th>
+        <th>User</th>
+        <th>Status</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
@@ -36,6 +38,15 @@
           <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to incident.location, incident, title: 'Show Incident' %></td>
           <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to incident.description, incident, title: 'Show Incident' %></td>
           <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to incident.measure, incident, title: 'Show Incident' %></td>
+          <td class="col-sm-6 col-md-6 col-lg-4"><%= link_to incident.user, incident, title: 'Show Incident' %></td>
+          
+          <% if incident.status == 0 %>
+            <td class="col-sm-6 col-md-6 col-lg-4"><%= link_to 'Pending', incident, title: 'Show Incident' %></td>
+          <% end %>
+          <% if incident.status == 1 %>
+            <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Resolved', desk, title: 'Show Desk' %></td>
+          <% end %>
+          
           <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_incident_path(incident), title: 'Edit Incident'  %></td>
           <td class="col-sm-1 col-md-1 col-lg-1">
             <a href="#" title='Delete Incident' data-toggle="modal" data-target="#delete-user-modal-<%= incident.id %>"><i class="fa fa-trash"></i></a>
