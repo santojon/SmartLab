@@ -1,5 +1,5 @@
 class Desk < ApplicationRecord
-	belongs_to :lab
+	belongs_to :lab, optional: false
 	has_many :equipments
 
 	has_many :accesses

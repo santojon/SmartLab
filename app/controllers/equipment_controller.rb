@@ -25,7 +25,11 @@ class EquipmentController < ApplicationController
     e = p.to_h
     
     if e.has_key?(:desk)
-      e[:desk] = Desk.find(e[:desk])
+      if !e[:desk].blank?
+        e[:desk] = Desk.find(e[:desk])
+      else
+        e[:desk] = nil
+      end
     end
 
     if e.has_key?(:user)
@@ -43,12 +47,6 @@ class EquipmentController < ApplicationController
   # POST /equipment.json
   def create
     e = setup_params(equipment_params)
-    
-    if e[:user] == nil
-      @equipment.user = nil
-      @equipment.save
-    end
-    
     @equipment = Equipment.new(e)
 
     respond_to do |format|
