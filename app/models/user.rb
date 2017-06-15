@@ -2,8 +2,6 @@ class User < ApplicationRecord
 	has_many :accesses
 	has_many :desks, through: :accesses
 	
-	has_many :incidents
-	
 	belongs_to :equipment
 	
 	devise :database_authenticatable, :validatable
