@@ -2,17 +2,22 @@
     {
         "location": "Laboratório de Hardware",
         "description": "Quebra de placa DE2-70",
-        "measure": "Advertência ao aluno e comunicação a Edna."
+        "measure": "Advertência ao aluno e comunicação a Edna.",
+        "status": 0,
+        "user": 2
     },
     {
         "location": "Laboratório de Hardware",
         "description": "Quebra de placa DE2-70",
-        "measure": "Advertência ao aluno e comunicação a Edna."
-        
+        "measure": "Advertência ao aluno e comunicação a Edna.",
+        "status": 0,
+        "user": 2
     },
     {
         "location": "Laboratório de Hardware",
         "description": "Quebra de Arduíno",
-        "measure": "Advertência ao aluno e comunicação a Edna."
+        "measure": "Advertência ao aluno e comunicação a Edna.",
+        "status": 1,
+        "user": 2
     }
 ]
