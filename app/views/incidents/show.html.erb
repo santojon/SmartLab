@@ -35,6 +35,28 @@
         <%= f.text_field :measure, class: 'form-control', disabled: true, placeholder: 'Measure' %>
       </div>
     </div>
+    
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :status %></span>
+        <% if @incident.status == 0 %>
+          <%= f.text_field :status, class: 'form-control', disabled: true, value:"Pending" %>
+        <% end %>
+        
+        <% if @incident.status == 1 %>
+          <%= f.text_field :status, class: 'form-control', disabled: true, value:"Resolved" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+    <div class="row mtop10">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon"><%= f.label :user %></span>
+        <%= f.text_field :user, class: 'form-control', disabled: true, value: @incident.user.name + ' (' +  @incident.user.email + ')' %>
+      </div>
+    </div>
   </div>
   
   <div class="row mtop10">
