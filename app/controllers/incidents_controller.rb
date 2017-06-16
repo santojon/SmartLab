@@ -57,8 +57,11 @@ class IncidentsController < ApplicationController
   # PATCH/PUT /incidents/1
   # PATCH/PUT /incidents/1.json
   def update
+    
+    i = setup_params(incident_params)
+    
     respond_to do |format|
-      if @incident.update(incident_params)
+      if @incident.update(i)
         format.html { redirect_to @incident, notice: 'Incident was successfully updated.' }
         format.json { render :show, status: :ok, location: @incident }
       else

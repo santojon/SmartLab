@@ -4,6 +4,8 @@ class User < ApplicationRecord
 	
 	belongs_to :equipment
 	
+	has_many :incident
+	
 	devise :database_authenticatable, :validatable
 	
 	def to_s
