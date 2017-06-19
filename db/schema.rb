@@ -37,10 +37,12 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.string   "description"
     t.string   "tag",         null: false
     t.string   "serial",      null: false
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "desk_id"
     t.index ["desk_id"], name: "index_equipment_on_desk_id"
+    t.index ["user_id"], name: "index_equipment_on_user_id"
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -66,10 +68,8 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.string   "email",                              null: false
     t.string   "encrypted_password",                 null: false
     t.boolean  "admin",              default: false, null: false
-    t.integer  "equipment_id"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
-    t.index ["equipment_id"], name: "index_users_on_equipment_id"
   end
 
 end

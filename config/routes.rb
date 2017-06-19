@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       #custom routes
       get "/desks/:id/access" => "desks#access"
       get "/desks/:id/release" => "desks#release"
+      get "desks/equipment/set_user" => "equipment#set_user"
       
       #application routes
       resources :tokens

@@ -51,5 +51,38 @@
         ), incidents_path, class: 'btn btn-default' %>
       </div>
     </div>
+    
+    <div class="col-md-6">
+      <div class="input-group pull-right">
+        <% if current_user.admin %>
+          <a class="btn btn-danger" href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<%= @incident.id %>"><i class="fa fa-trash"></i> Delete Incident</a>
+            
+          <!-- Delete Modal -->
+          <div class="modal fade" id="delete-user-modal-<%= @incident.id %>" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= @incident.description %>&nbsp;</h4>
+                </div>
+                <div class="modal-body">
+                  <p><h4>Are you sure? This cannot be undone.</h4></p>
+                </div>
+                <div class="modal-footer">
+                  <%= link_to content_tag(
+                      :div,
+                      content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                  ), @incident, method: :delete, class: 'btn btn-danger' %>
+                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>

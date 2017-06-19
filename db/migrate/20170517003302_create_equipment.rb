@@ -5,6 +5,7 @@ class CreateEquipment < ActiveRecord::Migration[5.0]
       t.string :description, :null => true
       t.string :tag, :null => false, :unique => true
       t.string :serial, :null => false, :unique => true
+      t.belongs_to :user, :optional => true
 
       t.timestamps
     end

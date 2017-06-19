@@ -10,6 +10,59 @@
   </script>
 <% end %>
 
+<script type="text/javascript">
+  var add_ids = []
+  var add_serials = []
+  var txt = ''
+  var ser = ''
+  var u = ''
+  
+  function set_u(param) {
+    document.getElementById('confirm-buttom').href += '&u=' + param.selectedIndex
+    $('#confirm-buttom').removeAttr('disabled')
+  }
+  
+  function setup_eq(param) {
+    $('#confirm-buttom').attr('disabled', 'disabled')
+    $('#add-user-btn').removeAttr('disabled')
+    
+    var  i = add_ids.indexOf(param.id)
+    if (i != -1) {
+      add_ids.splice(i, 1)
+    } else {
+      add_ids.push(param.id)
+    }
+    
+    var  j = add_serials.indexOf(param.name)
+    if (j != -1) {
+      add_serials.splice(j, 1)
+    } else {
+      add_serials.push(param.name)
+    }
+    
+    txt = ''
+    add_serials.forEach((id, index) => {
+      if ((add_ids.length == 1) || (add_ids.length == (index - 1)) || (index == 0)) {
+        txt += id
+      } else {
+        txt = txt + ', ' + id
+      }
+    })
+    
+    ser = ''
+    add_ids.forEach((id, index) => {
+      if ((add_serials.length == 1) || (add_serials.length == (index - 1)) || (index == 0)) {
+        ser += id
+      } else {
+        ser = ser + ',' + id
+      }
+    })
+    
+    document.getElementById('confirm-buttom').href = 'equipment/set_user?d=' + window.location.pathname.split('/')[2] + '&ids=' + ser
+    document.getElementById('add-serials-container').innerHTML = txt
+  }
+</script>
+
 <h1><%= @desk.name%></h1>
 <%= form_for(@desk, class: 'form-horizontal') do |f| %>
   <div class="row mtop10">
@@ -63,9 +116,13 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th>&nbsp</th>
               <th>Model</th>
               <th>Description</th>
-              <th>Tag</th>
+              <% if current_user.admin %>
+                <th>User</th>
+                <th>Tag</th>
+              <% end %>
               <th>Serial</th>
             </tr>
           </thead>
@@ -74,17 +131,23 @@
             <% @equipment.each do |equipment| %>
               <% if current_user.admin %>
                 <tr>
+                  <td><input type="checkbox" name="<%= equipment.serial %>" id="<%= equipment.id %>" onclick="setup_eq(this)"></td>
                   <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.model, equipment, title: 'Show Equipment' %></td>
-                  <td class="col-sm-5 col-md-5 col-lg-5"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
+                  <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
+                  <% if equipment.user %>
+                    <td class="col-sm-2 col-md-2 col-lg-2"><%= link_to equipment.user, equipment, title: 'Show Equipment' %></td>
+                  <% else %>
+                    <td class="col-sm-2 col-md-2 col-lg-2"><%= link_to '--', equipment, title: 'Show Equipment' %></td>
+                  <% end %>
                   <td class="col-sm-2 col-md-6 col-lg-2"><%= link_to equipment.tag, equipment, title: 'Show Equipment' %></td>
                   <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
                 </tr>
               <% else %>
                 <tr>
+                  <td>&nbsp</td>
                   <td class="col-sm-3 col-md-3 col-lg-3"><%= equipment.model %></td>
-                  <td class="col-sm-5 col-md-5 col-lg-5"><%= equipment.description %></td>
-                  <td class="col-sm-2 col-md-6 col-lg-2"><%= equipment.tag %></td>
-                  <td class="col-sm-2 col-md-4 col-lg-2"><%= equipment.serial %></td>
+                  <td class="col-sm-6 col-md-6 col-lg-6"><%= equipment.description %></td>
+                  <td class="col-sm-3 col-md-3 col-lg-3"><%= equipment.serial %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -140,6 +203,67 @@
               :div,
               content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
           ), request.referer || desks_path, class: 'btn btn-default' %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="input-group pull-right">
+        <% if current_user.admin %>
+          <a id="add-user-btn" disabled="disabled" class="btn btn-info" href="#" title='Set User' data-toggle="modal" data-target="#add-user-modal-<%= @desk.id %>"><i class="fa fa-user-plus"></i> Set User</a>
+          <a class="btn btn-danger" href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<%= @desk.id %>"><i class="fa fa-trash"></i> Delete Desk</a>
+            
+          <!-- Delete Modal -->
+          <div class="modal fade" id="delete-user-modal-<%= @desk.id %>" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= @desk.name %>&nbsp;</h4>
+                </div>
+                <div class="modal-body">
+                  <p><h4>Are you sure? This cannot be undone.</h4></p>
+                </div>
+                <div class="modal-footer">
+                  <%= link_to content_tag(
+                      :div,
+                      content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                  ), @desk, method: :delete, class: 'btn btn-danger' %>
+                  
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          <!-- Add User Modal -->
+          <div class="modal fade" id="add-user-modal-<%= @desk.id %>" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Set User for Equipment</h4>
+                </div>
+                <div class="modal-body">
+                  <p><h4>Equipment with serial(s) <b><span id="add-serials-container"></span></b> will be setted by 'in use' for user:</h4></p>
+                  <p>
+                    <div class="input-group">
+                      <span class="input-group-addon">User</span>
+                      <%= f.select :users, User.all.collect { |u| [ u.name + ' (' + u.email + ')', u.id ] }, { :include_blank => 'Select a User' }, { :class => 'form-control', :onchange => 'set_u(this)' } %>
+                    </div>
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <a id="confirm-buttom" href="equipment/set_user" class="btn btn-info" disabled><i class="fa fa-user-plus"></i> Set User</a>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

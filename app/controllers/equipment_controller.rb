@@ -75,6 +75,18 @@ class EquipmentController < ApplicationController
       end
     end
   end
+  
+  def set_user
+    user = User.find(params[:u])
+    eqs = Equipment.find(params[:ids].split(/,/))
+    
+    eqs.each do |eq|
+      eq.user = user
+      eq.save
+    end
+    
+    redirect_to request.referer || desks_path, id: params[:d], notice: 'Equipment(s) successfully updated.'
+  end
 
   # DELETE /equipment/1
   # DELETE /equipment/1.json
