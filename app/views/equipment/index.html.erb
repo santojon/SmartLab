@@ -78,3 +78,67 @@
     Nothing created yet.
   </div>
 <% end %>
+
+
+<% @eq = @equipment.find_all { |eq| eq.user } %>
+
+<% if !@eq.empty? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Description</th>
+        <th>Desk</th>
+        <th>Serial</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @eq.each do |equipment| %>
+        <tr>
+          <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to equipment.model, equipment, title: 'Show Equipment' %></td>
+          <td class="col-sm-5 col-md-5 col-lg-5"><%= link_to equipment.description, equipment, title: 'Show Equipment' %></td>
+          <td class="col-sm-2 col-md-6 col-lg-2"><%= link_to equipment.desk, equipment, title: 'Show Equipment' %></td>
+          <td class="col-sm-2 col-md-4 col-lg-2"><%= link_to equipment.serial, equipment, title: 'Show Equipment' %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_equipment_path(equipment), title: 'Edit Equipment'  %></td>
+          <td class="col-sm-1 col-md-1 col-lg-1">
+            <a href="#" title='Delete Equipment' data-toggle="modal" data-target="#delete-user-modal-<%= equipment.id %>"><i class="fa fa-trash"></i></a>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="delete-user-modal-<%= equipment.id %>" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= equipment.serial %>&nbsp;</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p><h4>Are you sure? This cannot be undone.</h4></p>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to content_tag(
+                        :div,
+                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                    ), equipment, method: :delete, class: 'btn btn-danger' %>
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    
+    <%= will_paginate @equipment, renderer: BootstrapPagination::Rails %>
+  </table>
+<% else %>
+  <div class="alert alert-dismissible alert-info">
+    Nothing used yet.
+  </div>
+<% end %>
