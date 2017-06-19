@@ -30,5 +30,6 @@ default_equipments.each do |equipment|
 end
 
 default_incidents.each do |incident|
+  incident['user'] = User.find(incident['user'])
   Incident.create(incident)
 end

@@ -26,12 +26,12 @@ class IncidentsController < ApplicationController
     
     if d.has_key?(:user)
       if !d[:user].blank?
-        d[:user] = USer.find(d[:user])
+        d[:user] = User.find(d[:user])
       else
         d[:user] = nil
       end
     end
-    
+   
     d
   end
 
@@ -57,8 +57,11 @@ class IncidentsController < ApplicationController
   # PATCH/PUT /incidents/1
   # PATCH/PUT /incidents/1.json
   def update
+    
+    i = setup_params(incident_params)
+    
     respond_to do |format|
-      if @incident.update(incident_params)
+      if @incident.update(i)
         format.html { redirect_to @incident, notice: 'Incident was successfully updated.' }
         format.json { render :show, status: :ok, location: @incident }
       else
@@ -86,6 +89,6 @@ class IncidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:location, :description, :measure, :user)
+      params.require(:incident).permit(:location, :description, :measure , :status, :user)
     end
 end

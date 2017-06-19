@@ -6,6 +6,8 @@ class CreateIncidents < ActiveRecord::Migration[5.0]
       t.string :measure, :null => true
       t.integer :status, :null => false
       
+      t.belongs_to :user, :optional => false
+      
       t.timestamps
     end
   end
