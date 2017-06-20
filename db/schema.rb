@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170517022151) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "accesses", force: :cascade do |t|
     t.integer  "desk_id"
     t.integer  "user_id"
@@ -19,8 +22,8 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.binary   "image"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["desk_id"], name: "index_accesses_on_desk_id"
-    t.index ["user_id"], name: "index_accesses_on_user_id"
+    t.index ["desk_id"], name: "index_accesses_on_desk_id", using: :btree
+    t.index ["user_id"], name: "index_accesses_on_user_id", using: :btree
   end
 
   create_table "desks", force: :cascade do |t|
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "lab_id"
-    t.index ["lab_id"], name: "index_desks_on_lab_id"
+    t.index ["lab_id"], name: "index_desks_on_lab_id", using: :btree
   end
 
   create_table "equipment", force: :cascade do |t|
@@ -41,8 +44,8 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "desk_id"
-    t.index ["desk_id"], name: "index_equipment_on_desk_id"
-    t.index ["user_id"], name: "index_equipment_on_user_id"
+    t.index ["desk_id"], name: "index_equipment_on_desk_id", using: :btree
+    t.index ["user_id"], name: "index_equipment_on_user_id", using: :btree
   end
 
   create_table "incidents", force: :cascade do |t|
@@ -53,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["user_id"], name: "index_incidents_on_user_id"
+    t.index ["user_id"], name: "index_incidents_on_user_id", using: :btree
   end
 
   create_table "labs", force: :cascade do |t|
@@ -74,4 +77,6 @@ ActiveRecord::Schema.define(version: 20170517022151) do
     t.datetime "updated_at",                         null: false
   end
 
+  add_foreign_key "desks", "labs"
+  add_foreign_key "equipment", "desks"
 end
