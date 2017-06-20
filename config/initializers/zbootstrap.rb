@@ -1,29 +1,15 @@
-default_users = JSON.parse(File.read("#{Rails.root}/db/bootstrap/users.json"))
-default_labs = JSON.parse(File.read("#{Rails.root}/db/bootstrap/labs.json"))
-default_desks = JSON.parse(File.read("#{Rails.root}/db/bootstrap/desks.json"))
-default_equipments = JSON.parse(File.read("#{Rails.root}/db/bootstrap/equipments.json"))
-default_incidents = JSON.parse(File.read("#{Rails.root}/db/bootstrap/incidents.json"))
-
-# Create all default entities from given data
-default_users.each do |user|
-  User.create(user)
+Lab.all.each do |lab|
+    lab.delete
 end
 
-default_labs.each do |lab|
-  Lab.create(lab)
+Desk.all.each do |desk|
+    desk.delete
 end
 
-default_desks.each do |desk|
-  desk['lab'] = Lab.find(desk['lab'])
-  Desk.create(desk)
+Equipment.all.each do |equipment|
+    equipment.delete
 end
 
-default_equipments.each do |equipment|
-  equipment['desk'] = Desk.find(equipment['desk'])
-  Equipment.create(equipment)
-end
-
-default_incidents.each do |incident|
-  incident['user'] = User.find(incident['user'])
-  Incident.create(incident)
+Incident.all.each do |incident|
+    incident.delete
 end
