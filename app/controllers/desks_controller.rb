@@ -31,8 +31,8 @@ class DesksController < ApplicationController
   # GET /desks/1/release.json
   def release
     #remove desk from user
-    current_user.desks.delete(@desk)
-    current_user.save
+    @desk.accesses[0].user.desks.delete(@desk)
+    @desk.accesses[0].user.save
     
     #change desk status to free
     @desk.status = 0

@@ -68,7 +68,18 @@
         <%= link_to content_tag(
             :div,
             content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
-        ), edit_equipment_path(@equipment), class: 'btn btn-primary' %>
+        ), edit_equipment_path(@equipment), class: 'btn btn-primary mright10' %>
+        
+        <!-- Occupied -->
+        <% if @equipment.user != nil %>
+          <!-- BY YOU! -->
+          <% if current_user.admin %>
+            <%= link_to content_tag(
+                :span,
+                content_tag(:i,  nil , class: 'fa fa-undo') + ' Return'
+            ), {:controller => 'equipment', :action => 'return_equipment', :id => @equipment.id}, class: 'btn btn-warning mright10' %>
+          <% end %>
+        <% end %>
         
         <%= link_to content_tag(
             :div,

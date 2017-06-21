@@ -52,10 +52,33 @@
         
           <tbody>
             <% @desks.each do |desk| %>
-              <tr>
-                <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.name, desk, title: 'Show Desk' %></td>
-                <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.status, desk, title: 'Show Desk' %></td>
-              </tr>
+              <% if current_user.admin %>
+                <tr>
+                  <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to desk.name, desk, title: 'Show Desk' %></td>
+                  <% if desk.status == 0 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Free', desk, title: 'Show Desk' %></td>
+                  <% end %>
+                  <% if desk.status == 1 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'In Use', desk, title: 'Show Desk' %></td>
+                  <% end %>
+                  <% if desk.status == 2 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to 'Blocked', desk, title: 'Show Desk' %></td>
+                  <% end %>
+                </tr>
+              <% else %>
+                <tr>
+                  <td class="col-sm-6 col-md-6 col-lg-6"><%= desk.name %></td>
+                  <% if desk.status == 0 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6">Free</td>
+                  <% end %>
+                  <% if desk.status == 1 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6">In Use</td>
+                  <% end %>
+                  <% if desk.status == 2 %>
+                    <td class="col-sm-6 col-md-6 col-lg-6">Blocked</td>
+                  <% end %>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>
@@ -75,12 +98,12 @@
         <%= link_to content_tag(
             :div,
             content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
-        ), edit_lab_path(@lab), class: 'btn btn-primary' %>
+        ), edit_lab_path(@lab), class: 'btn btn-primary mright10' %>
         
         <%= link_to content_tag(
             :div,
             content_tag(:i,  nil , class: 'fa fa-chevron-left') + ' Back'
-        ), labs_path, class: 'btn btn-default' %>
+        ), labs_path, class: 'btn btn-default mright10' %>
       </div>
     </div>
     

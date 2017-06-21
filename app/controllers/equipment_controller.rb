@@ -1,5 +1,5 @@
 class EquipmentController < ApplicationController
-  before_action :set_equipment, only: [:show, :edit, :update, :destroy]
+  before_action :set_equipment, only: [:show, :edit, :update, :destroy, :return_equipment]
 
   # GET /equipment
   # GET /equipment.json
@@ -43,6 +43,15 @@ class EquipmentController < ApplicationController
     e
   end
 
+  def return_equipment
+    @equipment.user.equipment.delete(@equipment)
+    @equipment.user.save
+    
+    @equipment.save
+    #then
+    redirect_to @equipment, notice: 'Equipment is now released.'
+  end
+  
   # POST /equipment
   # POST /equipment.json
   def create

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get "/desks/:id/access" => "desks#access"
       get "/desks/:id/release" => "desks#release"
       get "desks/equipment/set_user" => "equipment#set_user"
+      get "/equipment/:id/return_equipment" => "equipment#return_equipment"
       
       #application routes
       resources :tokens

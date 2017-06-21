@@ -170,31 +170,31 @@
           <%= link_to content_tag(
               :div,
               content_tag(:i,  nil , class: 'fa fa-pencil') + ' Edit'
-          ), edit_desk_path(@desk), class: 'btn btn-primary' %>
+          ), edit_desk_path(@desk), class: 'btn btn-primary mright10' %>
           
           <% if @desk.status == 0 %>
             <%= link_to content_tag(
                 :div,
                 content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
-            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
+            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success mright10' %>
           <% end %>
         <% else %>
           <% if @desk.status == 0 %>
             <%= link_to content_tag(
                 :div,
                 content_tag(:i,  nil , class: 'fa fa-key') + ' Access'
-            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success' %>
+            ), {:controller => 'desks', :action => 'access', :id => @desk.id}, class: 'btn btn-success mright10' %>
           <% end %>
         <% end %>
         
         <!-- Occupied -->
         <% if @desk.status == 1 %>
           <!-- BY YOU! -->
-          <% if Access.find_by(desk_id: @desk.id, user_id: current_user.id) %>
+          <% if (Access.find_by(desk_id: @desk.id, user_id: current_user.id) || current_user.admin) %>
             <%= link_to content_tag(
                 :span,
                 content_tag(:i,  nil , class: 'fa fa-key') + ' Release'
-            ), {:controller => 'desks', :action => 'release', :id => @desk.id}, class: 'btn btn-warning' %>
+            ), {:controller => 'desks', :action => 'release', :id => @desk.id}, class: 'btn btn-warning mright10' %>
           <% end %>
         <% end %>
         
@@ -210,7 +210,7 @@
     <div class="col-md-6">
       <div class="input-group pull-right">
         <% if current_user.admin %>
-          <a id="add-user-btn" disabled="disabled" class="btn btn-info" href="#" title='Set User' data-toggle="modal" data-target="#add-user-modal-<%= @desk.id %>"><i class="fa fa-user-plus"></i> Set User</a>
+          <a id="add-user-btn" disabled="disabled" class="btn btn-info mright10" href="#" title='Set User' data-toggle="modal" data-target="#add-user-modal-<%= @desk.id %>"><i class="fa fa-user-plus"></i> Set User</a>
           <a class="btn btn-danger" href="#" title='Delete Desk' data-toggle="modal" data-target="#delete-user-modal-<%= @desk.id %>"><i class="fa fa-trash"></i> Delete Desk</a>
             
           <!-- Delete Modal -->

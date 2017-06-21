@@ -16,63 +16,205 @@
             content_tag(:i,  nil , class: 'fa fa-plus') + ' New'
     ), new_user_path, title: 'Create new', class: 'btn btn-md btn-primary pull-left mright10' %>
   <h1>Users</h1>
+  
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a data-toggle="tab" href="#u_all">All</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#u_common">Common Users</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#u_admin">Admin Users</a></li>
+  </ul>
 </div>
 
-<% if !@users.empty? %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Cpf</th>
-        <th>Admin</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to user.name, user, title: 'Show User' %></td>
-          <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to user.cpf, user, title: 'Show User' %></td>
-          <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<%= user.id %>"><i class="fa fa-trash"></i></a>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<%= user.id %>" role="dialog">
-              <div class="modal-dialog">
-              
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= user.name %>&nbsp;</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p><h4>Are you sure? This cannot be undone.</h4></p>
-                  </div>
-                  <div class="modal-footer">
-                    <%= link_to content_tag(
-                        :div,
-                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
-                    ), user, method: :delete, class: 'btn btn-danger' %>
+<div class="tab-content">
+  <div class="tab-pane active" id="u_all">
+    <div class="mtop30">
+      <% if !@users.empty? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cpf</th>
+              <th>Admin</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to user.name, user, title: 'Show User' %></td>
+                <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to user.cpf, user, title: 'Show User' %></td>
+                <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1">
+                  <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<%= user.id %>"><i class="fa fa-trash"></i></a>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="delete-user-modal-<%= user.id %>" role="dialog">
+                    <div class="modal-dialog">
                     
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= user.name %>&nbsp;</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p><h4>Are you sure? This cannot be undone.</h4></p>
+                        </div>
+                        <div class="modal-footer">
+                          <%= link_to content_tag(
+                              :div,
+                              content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                          ), user, method: :delete, class: 'btn btn-danger' %>
+                          
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                        </div>
+                      </div>
+                      
+                    </div>
                   </div>
-                </div>
-                
-              </div>
-            </div>
-          </td>
-        </tr>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+      <% else %>
+        <div class="alert alert-dismissible alert-info">
+          Nothing created yet.
+        </div>
       <% end %>
-    </tbody>
-  </table>
-  
-  <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-<% else %>
-  <div class="alert alert-dismissible alert-info">
-    Nothing created yet.
+    </div>
   </div>
-<% end %>
+  
+  <div class="tab-pane" id="u_common">
+    <% @u = User.where(:admin => false).paginate(:page => params[:page], :per_page => 25) %>
+    
+    <div class="mtop30">
+      <% if !@u.empty? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cpf</th>
+              <th>Admin</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @u.each do |user| %>
+              <tr>
+                <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to user.name, user, title: 'Show User' %></td>
+                <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to user.cpf, user, title: 'Show User' %></td>
+                <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1">
+                  <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<%= user.id %>"><i class="fa fa-trash"></i></a>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="delete-user-modal-<%= user.id %>" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= user.name %>&nbsp;</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p><h4>Are you sure? This cannot be undone.</h4></p>
+                        </div>
+                        <div class="modal-footer">
+                          <%= link_to content_tag(
+                              :div,
+                              content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                          ), user, method: :delete, class: 'btn btn-danger' %>
+                          
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= will_paginate @u, renderer: BootstrapPagination::Rails %>
+      <% else %>
+        <div class="alert alert-dismissible alert-info">
+          Nothing created yet.
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="tab-pane" id="u_admin">
+    <% @u = User.where(:admin => true).paginate(:page => params[:page], :per_page => 25) %>
+    
+    <div class="mtop30">
+      <% if !@u.empty? %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cpf</th>
+              <th>Admin</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @u.each do |user| %>
+              <tr>
+                <td class="col-sm-5 col-md-6 col-lg-6"><%= link_to user.name, user, title: 'Show User' %></td>
+                <td class="col-sm-4 col-md-4 col-lg-4"><%= link_to user.cpf, user, title: 'Show User' %></td>
+                <td class="col-sm-2 col-md-2 col-lg-2"><% if user.admin %> <%= link_to 'Yes', user, title: 'Show User' %> <% else %> <%= link_to 'No', user, title: 'Show User' %> <% end %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_user_path(user), title: 'Edit User'  %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1">
+                  <a href="#" title='Delete User' data-toggle="modal" data-target="#delete-user-modal-<%= user.id %>"><i class="fa fa-trash"></i></a>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="delete-user-modal-<%= user.id %>" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= user.name %>&nbsp;</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p><h4>Are you sure? This cannot be undone.</h4></p>
+                        </div>
+                        <div class="modal-footer">
+                          <%= link_to content_tag(
+                              :div,
+                              content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                          ), user, method: :delete, class: 'btn btn-danger' %>
+                          
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= will_paginate @u, renderer: BootstrapPagination::Rails %>
+      <% else %>
+        <div class="alert alert-dismissible alert-info">
+          Nothing created yet.
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
