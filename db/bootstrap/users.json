@@ -1,8 +1,9 @@
 [
     {
-        "name": "Raphael",
-        "email": "rtsd@cin.ufpe.br",
-        "password": "password",
+        "name": "Admin",
+        "cpf": 11111111111,
+        "email": "admin@admin.com",
+        "password": "adminpass",
         "admin": true
     }
 ]
