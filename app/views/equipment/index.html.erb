@@ -90,7 +90,6 @@
     </div>
   </div>
   
-  
   <div class="tab-pane" id="eq_in_use">
     <div class="mtop30">
       <% @eq = Equipment.where.not(:user => nil).paginate(:page => params[:page], :per_page => 25) %>
@@ -154,7 +153,7 @@
         </table>
       <% else %>
         <div class="alert alert-dismissible alert-info">
-          Nothing used yet.
+          Nothing created yet.
         </div>
       <% end %>
     </div>
@@ -223,7 +222,7 @@
         </table>
       <% else %>
         <div class="alert alert-dismissible alert-info">
-          Nothing used yet.
+          Nothing created yet.
         </div>
       <% end %>
     </div>

@@ -16,63 +16,149 @@
             content_tag(:i,  nil , class: 'fa fa-plus') + ' New'
     ), new_lab_path, title: 'Create new', class: 'btn btn-md btn-primary pull-left mright10' %>
   <h1>Labs</h1>
+  
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a data-toggle="tab" href="#l_all">All</a></li>
+    
+    <% if !@labs.empty? %>
+      <% @buildings = @labs.collect { |l| l.building }.uniq %>
+      <% @buildings.each do |b| %>
+        <li role="presentation"><a data-toggle="tab" href="#l_<%= b %>"><%= b %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
 </div>
 
-<% if !@labs.empty? %>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Building</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-  
-    <tbody>
-      <% @labs.each do |lab| %>
-        <tr>
-          <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
-          <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
-          <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_lab_path(lab), title: 'Edit Lab'  %></td>
-          <td class="col-sm-1 col-md-1 col-lg-1">
-            <a href="#" title='Delete Lab' data-toggle="modal" data-target="#delete-user-modal-<%= lab.id %>"><i class="fa fa-trash"></i></a>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="delete-user-modal-<%= lab.id %>" role="dialog">
-              <div class="modal-dialog">
-              
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= lab.name %>&nbsp;</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p><h4>Are you sure? This cannot be undone.</h4></p>
-                  </div>
-                  <div class="modal-footer">
-                    <%= link_to content_tag(
-                        :div,
-                        content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
-                    ), lab, method: :delete, class: 'btn btn-danger' %>
+<div class="tab-content">
+  <div class="tab-pane active" id="l_all">
+    <div class="mtop30">
+      <% if !@labs.empty? %>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Building</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        
+          <tbody>
+            <% @labs.each do |lab| %>
+              <tr>
+                <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
+                <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
+                <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_lab_path(lab), title: 'Edit Lab'  %></td>
+                <td class="col-sm-1 col-md-1 col-lg-1">
+                  <a href="#" title='Delete Lab' data-toggle="modal" data-target="#delete-user-modal-<%= lab.id %>"><i class="fa fa-trash"></i></a>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="delete-user-modal-<%= lab.id %>" role="dialog">
+                    <div class="modal-dialog">
                     
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= lab.name %>&nbsp;</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p><h4>Are you sure? This cannot be undone.</h4></p>
+                        </div>
+                        <div class="modal-footer">
+                          <%= link_to content_tag(
+                              :div,
+                              content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                          ), lab, method: :delete, class: 'btn btn-danger' %>
+                          
+                          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                        </div>
+                      </div>
+                      
+                    </div>
                   </div>
-                </div>
-                
-              </div>
-            </div>
-          </td>
-        </tr>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= will_paginate @labs, renderer: BootstrapPagination::Rails %>
+      <% else %>
+        <div class="alert alert-dismissible alert-info">
+          Nothing created yet.
+        </div>
       <% end %>
-    </tbody>
-  </table>
-  
-  <%= will_paginate @labs, renderer: BootstrapPagination::Rails %>
-<% else %>
-  <div class="alert alert-dismissible alert-info">
-    Nothing created yet.
+    </div>
   </div>
-<% end %>
+  
+  <% if !@labs.empty? %>
+    <% @buildings.each do |b| %>
+      <div class="tab-pane" id="l_<%= b %>">
+        <% @l = Lab.where(:building => b).paginate(:page => params[:page], :per_page => 25) %>
+      
+        <div class="mtop30">
+          <% if !@l.empty? %>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Building</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            
+              <tbody>
+                <% @l.each do |lab| %>
+                  <tr>
+                    <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.code, lab, title: 'Show Lab' %></td>
+                    <td class="col-sm-6 col-md-6 col-lg-6"><%= link_to lab.name, lab, title: 'Show Lab' %></td>
+                    <td class="col-sm-3 col-md-3 col-lg-3"><%= link_to lab.building, lab, title: 'Show Lab' %></td>
+                    <td class="col-sm-1 col-md-1 col-lg-1"><%= link_to content_tag(:i,  nil, class: 'fa fa-pencil'), edit_lab_path(lab), title: 'Edit Lab'  %></td>
+                    <td class="col-sm-1 col-md-1 col-lg-1">
+                      <a href="#" title='Delete Lab' data-toggle="modal" data-target="#delete-user-modal-<%= lab.id %>"><i class="fa fa-trash"></i></a>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="delete-user-modal-<%= lab.id %>" role="dialog">
+                        <div class="modal-dialog">
+                        
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title"><span class="fa fa-exclamation-triangle"></span> Delete <%= lab.name %>&nbsp;</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p><h4>Are you sure? This cannot be undone.</h4></p>
+                            </div>
+                            <div class="modal-footer">
+                              <%= link_to content_tag(
+                                  :div,
+                                  content_tag(:span,  nil, class: 'fa fa-trash') + ' Delete'
+                              ), lab, method: :delete, class: 'btn btn-danger' %>
+                              
+                              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            
+            <%= will_paginate @l, renderer: BootstrapPagination::Rails %>
+          <% else %>
+            <div class="alert alert-dismissible alert-info">
+              Nothing created yet.
+            </div>
+          <% end %>
+      </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
