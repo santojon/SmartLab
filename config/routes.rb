@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get "/desks/:id/release" => "desks#release"
       get "desks/equipment/set_user" => "equipment#set_user"
       get "/equipment/:id/return_equipment" => "equipment#return_equipment"
+      match "/equipment/import" => "equipment#import", :via => :post
       
       #application routes
       resources :tokens

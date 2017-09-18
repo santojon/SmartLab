@@ -21,6 +21,13 @@ class EquipmentController < ApplicationController
   def edit
   end
   
+  #import csv
+  def import
+    Equipment.import(params[:file])
+    #then
+    redirect_to equipment_index_url, notice: 'Equipments where imported.'
+  end
+  
   def setup_params(p)
     e = p.to_h
     
