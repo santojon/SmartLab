@@ -5,8 +5,8 @@
       <h1 class="form-login-heading centered">SmartLab</h1>
       <h4 class="form-login-heading centered">Enter your credentials to log in:</h4>
       
-      <label class="sr-only" for="inputEmail">Email address</label>
-      <%= f.email_field :email, autofocus: true, class: 'form-control', id: 'inputEmail', placeholder: 'Email' %>
+      <label class="sr-only" for="inputEmail">Username / Email address</label>
+      <%= f.text_field :login, autofocus: true, class: 'form-control', id: 'inputEmail', placeholder: 'Username or Email' %>
       
       <label class="sr-only" for="inputPassword">Password</label>
       <%= f.password_field :password, autofocus: true, class: 'form-control', id: 'inputPassword', placeholder: 'Password' %>
